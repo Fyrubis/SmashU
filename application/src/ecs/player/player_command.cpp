@@ -41,10 +41,10 @@ void PlayerCommand::Create(
     spriteComponent.texture = spriteGroup->GetTexture();
     spriteComponent.srcRect = *spriteGroup->GetSourceRect(0);
     spriteComponent.dimensions = {
-        spriteComponent.srcRect.w / 60.f,
-        spriteComponent.srcRect.h / 60.f
+        spriteComponent.srcRect.w / 22.f,
+        spriteComponent.srcRect.h / 22.f
     };
-    spriteComponent.offset = b2Vec2{ 2.f, -0.1f };
+    spriteComponent.offset = b2Vec2{ 0.f, -0.1f };
 
     RenderSortingLayer renderLayer;
     renderLayer.enabled = true;

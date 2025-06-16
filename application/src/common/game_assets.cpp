@@ -260,7 +260,7 @@ void assets::InitAnimations_FireKnight(AssetManager *assets, SpriteAnimManager *
     //      - Donnez la bonne valeur pour le nombre de cycles (-1 pour se répéter indéfiniment)
 
     static const PlayerAnimLoadInfo animationsToLoad[] = {
-        { AnimType::IDLE, "Idle", 15.f, 1 },
+        { AnimType::IDLE, "Idle", 15.f, -1 },
         { AnimType::RUN, "Running", 5.f, -1 },
         { AnimType::SKID, "Skidding", 15.f, -1 },
         { AnimType::ROLL, "Roll", 22.f, 1 },
