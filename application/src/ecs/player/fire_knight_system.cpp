@@ -46,6 +46,8 @@ void FireKnightSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         case PlayerState::ATTACK_COMBO: type = AnimType::ATTACK_1; break;
         case PlayerState::ATTACK_SPECIAL: type = AnimType::ATTACK_2; break;
         case PlayerState::ATTACK_AIR: type = AnimType::ATTACK_3; break;
+        case PlayerState::SMASH_HOLD: type = AnimType::SMASH_START; break;
+        case PlayerState::SMASH_RELEASE: type = AnimType::SMASH_RELEASE; break;
         default: break;
         }
 
@@ -350,16 +352,16 @@ void FireKnightSystem::OnAnimCycleEnd(
     }
     // TODO - Décommentez le code suivant.
 
-    //case AnimType::SMASH_START:
-    //{
-    //    nextAnimType = AnimType::SMASH_HOLD;
-    //    break;
-    //}
-    //case AnimType::SMASH_RELEASE:
-    //{
-    //    event.type = PlayerAnimInfo::Event::SMASH_END;
-    //    break;
-    //}
+    case AnimType::SMASH_START:
+    {
+        nextAnimType = AnimType::SMASH_HOLD;
+        break;
+    }
+    case AnimType::SMASH_RELEASE:
+    {
+        event.type = PlayerAnimInfo::Event::SMASH_END;
+        break;
+    }
     default: break;
     }
 

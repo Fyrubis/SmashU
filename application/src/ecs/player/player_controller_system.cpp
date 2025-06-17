@@ -88,12 +88,12 @@ void PlayerControllerSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         // TODO - Décommentez le code suivant qui met à jour des délais
         //        dont vous aurez éventuellement besoin pour la partie libre.
 
-        //controller.delayBonusJump -= delta;
-        //controller.delayCoyoteJump -= delta;
-        //controller.delayRoll -= delta;
-        //controller.delaySmashReleaseMin -= delta;
-        //controller.delaySmashReleaseMax -= delta;
-        //if (ground.isGrounded) controller.delayClearLastDamager -= delta;
+        controller.delayBonusJump -= delta;
+        controller.delayCoyoteJump -= delta;
+        controller.delayRoll -= delta;
+        controller.delaySmashReleaseMin -= delta;
+        controller.delaySmashReleaseMax -= delta;
+        if (ground.isGrounded) controller.delayClearLastDamager -= delta;
     }
 }
 
@@ -287,7 +287,8 @@ void PlayerControllerSystem::FixedUpdateState(
                 // TODO - Déterminez si le personnage doit passer dans l'état
                 //        PlayerState::SMASH_RELEASE
                 //        Utilisez input.attackDown
-
+                if(!input.attackDown)
+                    PlayerUtils::SetState(controller, PlayerState::SMASH_RELEASE);
                 
                 
                 // BONUS - Utilisez aussi controller.delaySmashReleaseMin et
@@ -311,7 +312,7 @@ void PlayerControllerSystem::FixedUpdateState(
                         PlayerUtils::SetState(controller, PlayerState::ATTACK_SPECIAL);
                         break;
                     case AttackType::SMASH:
-                        PlayerUtils::SetState(controller, PlayerState::ATTACK_AIR);
+                        PlayerUtils::SetState(controller, PlayerState::SMASH_HOLD);
                         break;
                     default:
                         PlayerUtils::SetState(controller, PlayerState::IDLE);
