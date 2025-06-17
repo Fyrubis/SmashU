@@ -33,7 +33,7 @@ void PlayerCommand::Create(
     spriteGroup = animManager->GetSpriteGroup(animId);
     AssertNew(spriteGroup);
 
-    // TODO - Modifiez les dimensions du sprite pour 22 pixels par unité
+    // TODO 8- Modifiez les dimensions du sprite pour 22 pixels par unité
     //      - Modifiez l'offset pour 0.0 en X et -0.1 en Y.
 
     Sprite spriteComponent;
@@ -121,8 +121,8 @@ b2BodyId PlayerCommand::CreateBody(entt::entity entity, Scene *scene, const Play
     {
         // TODO - A modifier lors de la création du second personnage à la fin du tuto.
 
-        capsule.center1 = b2Vec2{ 0.f, 0.0f };
-        capsule.center2 = b2Vec2{ 0.f, 1.0f };
+        capsule.center1 = b2Vec2{ 0.f, 0.45f };
+        capsule.center2 = b2Vec2{ 0.f, 1.15f };
     }
     // TODO - Donnez les valeurs suggérées dans le sujet.
 

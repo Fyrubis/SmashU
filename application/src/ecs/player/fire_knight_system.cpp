@@ -37,6 +37,7 @@ void FireKnightSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         switch (controller.currState)
         {
         case PlayerState::IDLE: type = AnimType::IDLE; break;
+        case PlayerState::RUN: type = AnimType::RUN; break;
         case PlayerState::JUMP: type = AnimType::JUMP_UP; break;
         case PlayerState::FALL: type = AnimType::JUMP_TOP; break;
         case PlayerState::DEFEND: type = AnimType::DEFEND_START; break;
