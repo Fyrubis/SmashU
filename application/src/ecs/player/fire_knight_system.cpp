@@ -144,9 +144,9 @@ void FireKnightSystem::OnAnimFrameChanged(
 
         if (animEvent.index == 0)
         {
-            animInfo.autoVelocity = 15.0f;
+            animInfo.autoVelocity = 2.0f;
         }
-
+        animInfo.autoVelocity *= s;
         const b2Vec2 position = transform.position;
         Damage damage;
         damage.attackCenter = transform.position;
