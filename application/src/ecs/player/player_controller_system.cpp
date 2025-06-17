@@ -107,8 +107,8 @@ void PlayerControllerSystem::OnUpdate(EntityCommandBuffer &ecb)
         }
         if (input.jumpPressed)
         {
-            controller.delayEarlyJump = 0.1f;
             // TODO - Donnez la valeur 0.1f au champ delayEarlyJump du controller.
+            controller.delayEarlyJump = 0.1f;
         }
 
         sprite.flip = controller.facingRight ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
@@ -287,6 +287,7 @@ void PlayerControllerSystem::FixedUpdateState(
                 //        PlayerState::SMASH_RELEASE
                 //        Utilisez input.attackDown
                 
+                
                 // BONUS - Utilisez aussi controller.delaySmashReleaseMin et
                 //         controller.delaySmashReleaseMax pour le passage à l'état SMASH_RELEASE
             }
@@ -306,8 +307,11 @@ void PlayerControllerSystem::FixedUpdateState(
                 // TODO - Déterminez si le personnage doit être dans l'état IDLE ou RUN.
                 //        Testez si (fabsf(velocity.x) < 0.5f) pour savoir si le personnage
                 //        a une vitesse horizontale suffisante.
-
-                PlayerUtils::SetState(controller, PlayerState::IDLE);
+                if (fabsf(velocity.x) < 0.5f)
+                    PlayerUtils::SetState(controller, PlayerState::IDLE);
+                if (fabsf(velocity.x) >= 0.5f)
+                    PlayerUtils::SetState(controller, PlayerState::RUN);
+              
             }
         }
     }
@@ -454,15 +458,16 @@ void PlayerControllerSystem::FixedUpdatePhysics(
     //--------------------------------------------------------------------------
     // Début d'un saut
 
-    // TODO 6 - Modifiez les conditions du saut.
+    // TODO - Modifiez les conditions du saut.
     //      - Il faut un delayEarlyJump positif et être sur le sol.
 
-    if  (controller.delayEarlyJump > 0 && ground.isGrounded)
+    if  (controller.delayEarlyJump > 0 && ground.isGrounded) //ici condition pour le double saut
     {
         // TODO 6 - Modifiez la vitesse verticale pour lui donner la valeur du champ jumpImpulse du controller.
         //      - Puis donnez la valeur -1 au délai pour emp
+
         velocity.y = controller.jumpImpulse;
-        controller.delayEarlyJump = -1;
+        controller.delayEarlyJump = -1.f;
 
         // TODO 6 - Décommentez les lignes suivantes pour jouer un son et émettre un effet de poussière.
         m_scene->GetAssetManager()->PlaySoundFX(SFX_JUMP_GROUND);
@@ -484,7 +489,7 @@ void PlayerControllerSystem::FixedUpdatePhysics(
     //--------------------------------------------------------------------------
     // Définit la vitesse horizontale
 
-    // TODO 5 - Mise a jour de la vitesse
+    // TODO - Mise a jour de la vitesse
     //      - Décommentez la ligne modifiant hVelocity
 
     controller.hVelocity = 0.f;
@@ -504,7 +509,7 @@ void PlayerControllerSystem::FixedUpdatePhysics(
 
     velocity += ground.groundVelocity;
 
-    // TODO 5 - Mise a jour de la vitesse
+    // TODO 5- Mise a jour de la vitesse
     //      - Décommentez la ligne affectant la vitesse calculée au corps
     b2Body_SetLinearVelocity(bodyId, velocity);
 }
