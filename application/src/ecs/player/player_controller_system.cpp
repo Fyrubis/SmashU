@@ -311,11 +311,11 @@ void PlayerControllerSystem::FixedUpdateState(
                         break;
                     case AttackType::SPECIAL:
                         printf("special\n");
-                        PlayerUtils::SetState(controller, PlayerState::ATTACK_COMBO);
+                        PlayerUtils::SetState(controller, PlayerState::ATTACK_SPECIAL);
                         break;
                     case AttackType::SMASH:
                         printf("smash\n");
-                        PlayerUtils::SetState(controller, PlayerState::ATTACK_COMBO);
+                        PlayerUtils::SetState(controller, PlayerState::ATTACK_AIR);
                         break;
                     default:
                         printf("idle\n");
