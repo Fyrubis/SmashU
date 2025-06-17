@@ -287,6 +287,7 @@ void PlayerControllerSystem::FixedUpdateState(
                 // TODO - Déterminez si le personnage doit passer dans l'état
                 //        PlayerState::SMASH_RELEASE
                 //        Utilisez input.attackDown
+
                 
                 
                 // BONUS - Utilisez aussi controller.delaySmashReleaseMin et
@@ -301,17 +302,39 @@ void PlayerControllerSystem::FixedUpdateState(
                 //        Utilisez input.attackType pour attribuer les états
                 //        SMASH_HOLD, ATTACK_SPECIAL ou ATTACK_COMBO.
 
+                printf("Check : %d\n\n", input.attackDown);
+
+                switch (input.attackType) {
+                    case AttackType::COMBO:
+                        printf("combo\n");
+                        PlayerUtils::SetState(controller, PlayerState::ATTACK_COMBO);
+                        break;
+                    case AttackType::SPECIAL:
+                        printf("special\n");
+                        PlayerUtils::SetState(controller, PlayerState::ATTACK_COMBO);
+                        break;
+                    case AttackType::SMASH:
+                        printf("smash\n");
+                        PlayerUtils::SetState(controller, PlayerState::ATTACK_COMBO);
+                        break;
+                    default:
+                        printf("idle\n");
+                        PlayerUtils::SetState(controller, PlayerState::IDLE);
+                        break;
+                }
                 controller.delayAttack = -1.f;
+
             }
             else
             {
                 // TODO - Déterminez si le personnage doit être dans l'état IDLE ou RUN.
                 //        Testez si (fabsf(velocity.x) < 0.5f) pour savoir si le personnage
                 //        a une vitesse horizontale suffisante.
-                if (fabsf(velocity.x) < 0.5f)
-                    PlayerUtils::SetState(controller, PlayerState::IDLE);
+
                 if (fabsf(velocity.x) >= 0.5f)
                     PlayerUtils::SetState(controller, PlayerState::RUN);
+                if (fabsf(velocity.x) < 0.5f)
+                    PlayerUtils::SetState(controller, PlayerState::IDLE);
               
             }
         }

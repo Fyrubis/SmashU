@@ -43,6 +43,9 @@ void FireKnightSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         case PlayerState::DEFEND: type = AnimType::DEFEND_START; break;
         case PlayerState::LAUNCHED: type = AnimType::JUMP_UP; break;
         case PlayerState::TAKE_DAMAGE: type = AnimType::TAKE_HIT; break;
+        case PlayerState::ATTACK_COMBO: type = AnimType::ATTACK_1; break;
+        case PlayerState::ATTACK_SPECIAL: type = AnimType::ATTACK_2; break;
+        case PlayerState::ATTACK_AIR: type = AnimType::ATTACK_3; break;
         default: break;
         }
 
@@ -310,14 +313,14 @@ void FireKnightSystem::OnAnimCycleEnd(
     {
         // TODO - Décommenter l'enchaînement d'animation après la première attaque.
 
-        //if (input.attackDown)
-        //{
-        //    nextAnimType = AnimType::ATTACK_2;
-        //}
-        //else
-        //{
-        //    nextAnimType = AnimType::ATTACK_1_END;
-        //}
+        if (input.attackDown)
+        {
+            nextAnimType = AnimType::ATTACK_2;
+        }
+        else
+        {
+            nextAnimType = AnimType::ATTACK_1_END;
+        }
         break;
     }
     case AnimType::ATTACK_2:
