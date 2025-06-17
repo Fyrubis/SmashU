@@ -56,6 +56,7 @@ void PlayerControllerSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
             // TODO - Appeler la fonction PlayerUtils::EmitLandDust pour émettre de la poussière.
             //      - La scène est accessible via le membre m_scene
             //      - On peut savoir si le personnage regarde vers la droite avec le champ facingRight du controller.
+            PlayerUtils::EmitLandDust(m_scene, position, controller.facingRight);
         }
 
         // Shield & Damage

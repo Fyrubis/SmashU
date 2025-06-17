@@ -57,21 +57,21 @@ void PlayerUtils::EmitLandDust(Scene *scene, b2Vec2 position, bool facingRight)
 {
     // TODO - Décommentez cette partie 
 
-    //SpriteAnimManager *animManager = scene->GetAnimManager();
-    //ParticleSystem *particleSystem = scene->GetParticleSystem();
-    //Particle particle(AnimID_Make(AnimCategory::DUST, AnimType::LAND_DUST));
+    SpriteAnimManager *animManager = scene->GetAnimManager();
+    ParticleSystem *particleSystem = scene->GetParticleSystem();
+    Particle particle(AnimID_Make(AnimCategory::DUST, AnimType::LAND_DUST));
 
-    //particle.SetLifetimeFromAnim(animManager);
-    //particle.anchor = Anchor::SOUTH;
-    //particle.position = position + b2Vec2{ 0.f, -0.1f };
-    //particle.SetDelay(0.1f);
-    //particle.flip = facingRight ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-    //particle.pixPerUnit = 44.f;
-    //particle.alphaValues.value0 = 0.8f;
-    //particle.alphaValues.value1 = 0.4f;
-    //particle.alphaValues.easing = EasingFct_In;
+    particle.SetLifetimeFromAnim(animManager);
+    particle.anchor = Anchor::SOUTH;
+    particle.position = position + b2Vec2{ 0.f, -0.1f };
+    particle.SetDelay(0.1f);
+    particle.flip = facingRight ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+    particle.pixPerUnit = 44.f;
+    particle.alphaValues.value0 = 0.8f;
+    particle.alphaValues.value1 = 0.4f;
+    particle.alphaValues.easing = EasingFct_In;
 
-    //particleSystem->EmitParticle(LAYER_PARTICLES, particle);
+    particleSystem->EmitParticle(LAYER_PARTICLES, particle);
 }
 
 void PlayerUtils::EmitPowerAura(Scene *scene, b2Vec2 position)
