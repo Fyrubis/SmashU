@@ -264,9 +264,9 @@ void ImGuiManager::UpdateDrawShape(Camera &camera, Transform &cameraTransform)
         // Circle
 
         if (application->uiInputs[0].right) m_shapeExtents.x += 0.1f;
-        if (application->uiInputs[0].left)  m_shapeExtents.x -= 0.1f;
-        if (application->uiInputs[0].up)    m_shapeExtents.x += 0.1f;
-        if (application->uiInputs[0].down)  m_shapeExtents.x -= 0.1f;
+        if (application->uiInputs[0].left) m_shapeExtents.x -= 0.1f;
+        if (application->uiInputs[0].up) m_shapeExtents.x += 0.1f;
+        if (application->uiInputs[0].down) m_shapeExtents.x -= 0.1f;
         m_shapeExtents.x = math::Clamp(m_shapeExtents.x, 0.1f, 3.f);
 
         b2Circle circle{};

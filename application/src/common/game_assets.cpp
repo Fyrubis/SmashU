@@ -306,13 +306,31 @@ void assets::InitAnimations_FireKnight(AssetManager *assets, SpriteAnimManager *
 
 void assets::InitAnimations_WaterPriestress(AssetManager *assets, SpriteAnimManager *animManager)
 {
-    const float attackFPS = 1.f / PLAYER_ATTACK_FRAME_TIME;
+    const float attackFPS = 2.f / PLAYER_ATTACK_FRAME_TIME;
 
     static const PlayerAnimLoadInfo animationsToLoad[] = {
         { AnimType::IDLE, "Idle", 15.f, -1 },
-
         // TODO : Ajouter les autres animations
-
+        { AnimType::IDLE, "Idle", 15.f, -1 },
+        { AnimType::RUN, "Running", 22.f, -1 },
+        { AnimType::SKID, "Skidding", 15.f, -1 },
+        { AnimType::ROLL, "Roll", 22.f, 1 },
+        { AnimType::JUMP_UP, "JumpUp", 13.f, 1 },
+        { AnimType::JUMP_TOP, "JumpTop", 20.f, 1 },
+        { AnimType::JUMP_DOWN, "JumpDown", 13.f, -1 },
+        { AnimType::ATTACK_1, "Attack1", attackFPS, 1 },
+        { AnimType::ATTACK_2, "Attack2", attackFPS, 1 },
+        { AnimType::ATTACK_3, "Attack3", attackFPS, 1 },
+        { AnimType::ATTACK_1_END, "Attack1End", attackFPS, 1 },
+        { AnimType::ATTACK_2_END, "Attack2End", attackFPS, 1 },
+        { AnimType::ATTACK_AIR, "AttackAir", attackFPS, 1 },
+        { AnimType::SMASH_START, "SmashStart", 20.f, 1 },
+        { AnimType::SMASH_HOLD, "SmashHold", 15.f, -1 },
+        { AnimType::SMASH_RELEASE, "SmashRelease", attackFPS, 1 },
+        { AnimType::DEFEND_START, "StartDefend", 20.f, 1 },
+        { AnimType::DEFEND, "Defend", 20.f, -1 },
+        { AnimType::TAKE_HIT, "TakeHit", 25.f, 1 },
+        { AnimType::PLAYER_INTRO, "Introduction", 25.f, 1 },
     };
     static const AnimCategory categories[] = { AnimCategory::WATER_PRIESTESS_0, AnimCategory::WATER_PRIESTESS_1 };
     static const int sheetIDs[] = { SHEET_WATER_PRIESTESS_0, SHEET_WATER_PRIESTESS_1 };

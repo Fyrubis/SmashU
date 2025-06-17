@@ -38,10 +38,13 @@ void PlayerInputSystem::OnUpdate(EntityCommandBuffer &ecb)
         if (input.smashPressed)
         {
             controllerInput.attackPressed = true;
+            controllerInput.attackType = AttackType::SMASH;
+            
         }
         else if (input.specialPressed)
         {
             controllerInput.attackPressed = true;
+            controllerInput.attackType = AttackType::SPECIAL;
         }
         else if (input.attackPressed)
         {
@@ -49,8 +52,9 @@ void PlayerInputSystem::OnUpdate(EntityCommandBuffer &ecb)
             //      - Décommentez les lignes suivantes.
             //      - Modifiez les deux tests précédents pour attribuer le bon type d'attaque.
 
-            //controllerInput.attackPressed = true;
-            //controllerInput.attackType = AttackType::COMBO;
+            controllerInput.attackPressed = true;
+            controllerInput.attackType = AttackType::COMBO;
+
         }
 
         switch (controllerInput.attackType)

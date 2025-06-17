@@ -56,6 +56,7 @@ void PlayerControllerSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
             // TODO - Appeler la fonction PlayerUtils::EmitLandDust pour émettre de la poussière.
             //      - La scène est accessible via le membre m_scene
             //      - On peut savoir si le personnage regarde vers la droite avec le champ facingRight du controller.
+            PlayerUtils::EmitLandDust(m_scene, position, controller.facingRight);
         }
 
         // Shield & Damage
@@ -87,12 +88,12 @@ void PlayerControllerSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         // TODO - Décommentez le code suivant qui met à jour des délais
         //        dont vous aurez éventuellement besoin pour la partie libre.
 
-        //controller.delayBonusJump -= delta;
-        //controller.delayCoyoteJump -= delta;
-        //controller.delayRoll -= delta;
-        //controller.delaySmashReleaseMin -= delta;
-        //controller.delaySmashReleaseMax -= delta;
-        //if (ground.isGrounded) controller.delayClearLastDamager -= delta;
+        controller.delayBonusJump -= delta;
+        controller.delayCoyoteJump -= delta;
+        controller.delayRoll -= delta;
+        controller.delaySmashReleaseMin -= delta;
+        controller.delaySmashReleaseMax -= delta;
+        if (ground.isGrounded) controller.delayClearLastDamager -= delta;
     }
 }
 
@@ -178,7 +179,7 @@ bool PlayerControllerSystem::OnPlayerFall(
 }
 
 void PlayerControllerSystem::FixedUpdateShieldAndDamage(
-    const PlayerAffiliation &affiliation, const GroundContact &ground, PlayerController &controller, Damageable &damageable)
+    const PlayerAffiliation &affiliation, const GroundContact &ground,PlayerController &controller, Damageable &damageable)
 {
     const float score = damageable.cumulativeDamage.amount;
     if (controller.currState == PlayerState::ROLL || score < 1.f)
@@ -286,6 +287,10 @@ void PlayerControllerSystem::FixedUpdateState(
                 // TODO - Déterminez si le personnage doit passer dans l'état
                 //        PlayerState::SMASH_RELEASE
                 //        Utilisez input.attackDown
+                if (input.attackDown == 0)
+                {
+                    PlayerUtils::SetState(controller, PlayerState::SMASH_RELEASE);
+                };
                 
                 
                 // BONUS - Utilisez aussi controller.delaySmashReleaseMin et
@@ -299,7 +304,22 @@ void PlayerControllerSystem::FixedUpdateState(
                 // TODO - Déterminez quelle attaque le personnage doit commencer.
                 //        Utilisez input.attackType pour attribuer les états
                 //        SMASH_HOLD, ATTACK_SPECIAL ou ATTACK_COMBO.
-
+               
+                switch (input.attackType)
+                {
+                    case AttackType::SMASH:
+                        printf("smash");
+                        PlayerUtils::SetState(controller, PlayerState::SMASH_HOLD);
+                        break;
+                    case AttackType::COMBO:
+                        printf("combo");
+                        PlayerUtils::SetState(controller, PlayerState::ATTACK_COMBO);
+                        break;
+                    case AttackType::SPECIAL:
+                        printf("special");
+                        PlayerUtils::SetState(controller, PlayerState::ATTACK_SPECIAL);             
+                        break;
+                };
                 controller.delayAttack = -1.f;
             }
             else

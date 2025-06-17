@@ -26,7 +26,8 @@ void FireKnightSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         //        passe à l'état PlayerState::RUN.
 
         // TODO - Plus loin dans le tuto, pour la gestion des attaques,
-        //        liez l'animation ATTACK_1 à l'état ATTACK_COMBO.
+        //        liez l'animation ATTACK_1 à l'état ATTACK_
+        // .
 
         // TODO - Vraiement plus loin dans le tuto, pour le smash,
         //        liez l'animation SMASH_START à l'état SMASH_HOLD,
@@ -43,6 +44,12 @@ void FireKnightSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         case PlayerState::DEFEND: type = AnimType::DEFEND_START; break;
         case PlayerState::LAUNCHED: type = AnimType::JUMP_UP; break;
         case PlayerState::TAKE_DAMAGE: type = AnimType::TAKE_HIT; break;
+        //
+        case PlayerState::ATTACK_COMBO: type = AnimType::ATTACK_1; break;
+        case PlayerState::ATTACK_SPECIAL: type = AnimType::ATTACK_2; break;
+        case PlayerState::SMASH_HOLD: type = AnimType::SMASH_START; break;
+        case PlayerState::SMASH_RELEASE: type = AnimType::SMASH_RELEASE; break;
+        case PlayerState::ROLL: type = AnimType::ROLL;break;
         default: break;
         }
 
@@ -112,7 +119,7 @@ void FireKnightSystem::OnAnimFrameChanged(
         {
             PlayerUtils::PlaySFXAttack(m_scene, playerID, SFX_SWORD_ATTACK_3, SFXIntensity::NORMAL);
         }
-        if (animEvent.index == 2)
+        if (animEvent.index == 4)
         {
             // TODO - Effectuez l'attaque sur la frame d'indice 4 et non celle d'indice 2.
 
@@ -129,7 +136,7 @@ void FireKnightSystem::OnAnimFrameChanged(
             //        en utilisant les outils de debug dans le jeu.
 
             const b2Vec2 center = transform.position + b2Vec2{ s * 0.8f, 1.5f };
-            const float radius = 0.5f;
+            const float radius = 2.f;
             bool hit = DamageUtils::AttackCircle(m_scene, entity, affiliation, damage, filter, center, radius);
             PlayerUtils::PlaySFXHit(m_scene, playerID, SFX_SWORD_HIT_A1, SFXIntensity::NORMAL, hit);
         }
@@ -141,7 +148,7 @@ void FireKnightSystem::OnAnimFrameChanged(
 
         if (animEvent.index == 0)
         {
-            animInfo.autoVelocity = 15.0f;
+            animInfo.autoVelocity = 2.0f*s;
         }
 
         const b2Vec2 position = transform.position;
@@ -223,8 +230,8 @@ void FireKnightSystem::OnAnimFrameChanged(
             Damage damage;
             damage.attackCenter = position;
             damage.amount = 1.f;
-            damage.ejectionType = Damage::Type::NO_EJECTION;
-            //damage.direction = math::UnitVectorDeg(90.f - s * 45.f);
+            damage.ejectionType = Damage::Type::FIXED_DIRECTION;
+            damage.direction = math::UnitVectorDeg(90.f - s * 45.f);
             damage.ejectionSpeed = 9.f;
             damage.lockTime = lockTime;
             damage.lockAttackTime = 10.5f * PLAYER_ATTACK_FRAME_TIME;
@@ -310,14 +317,14 @@ void FireKnightSystem::OnAnimCycleEnd(
     {
         // TODO - Décommenter l'enchaînement d'animation après la première attaque.
 
-        //if (input.attackDown)
-        //{
-        //    nextAnimType = AnimType::ATTACK_2;
-        //}
-        //else
-        //{
-        //    nextAnimType = AnimType::ATTACK_1_END;
-        //}
+        if (input.attackDown)
+        {
+            nextAnimType = AnimType::ATTACK_2;
+        }
+        else
+        {
+            nextAnimType = AnimType::ATTACK_1_END;
+        }
         break;
     }
     case AnimType::ATTACK_2:
@@ -346,16 +353,16 @@ void FireKnightSystem::OnAnimCycleEnd(
     }
     // TODO - Décommentez le code suivant.
 
-    //case AnimType::SMASH_START:
-    //{
-    //    nextAnimType = AnimType::SMASH_HOLD;
-    //    break;
-    //}
-    //case AnimType::SMASH_RELEASE:
-    //{
-    //    event.type = PlayerAnimInfo::Event::SMASH_END;
-    //    break;
-    //}
+    case AnimType::SMASH_START:
+    {
+        nextAnimType = AnimType::SMASH_HOLD;
+        break;
+    }
+    case AnimType::SMASH_RELEASE:
+    {
+        event.type = PlayerAnimInfo::Event::SMASH_END;
+        break;
+    }
     default: break;
     }
 

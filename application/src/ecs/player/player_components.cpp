@@ -62,9 +62,9 @@ PlayerController::PlayerController(PlayerType type)
     case PlayerType::WATER_PRIESTESS:
         airAcc = 40.f;
         groundAcc = 60.f;
-        maxSpeed = 6.f;
+        maxSpeed = 12.f;
         maxBonusJumpCount = 2;
-        jumpImpulse = 11.f;
+        jumpImpulse = 16.f;
         break;
     }
 }

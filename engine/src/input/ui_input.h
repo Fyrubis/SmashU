@@ -17,6 +17,10 @@ public:
     bool down;
     bool left;
     bool right;
+    bool z;
+    bool s;
+    bool q;
+    bool d;
     bool start;
     bool validatePressed;
     bool validateReleased;

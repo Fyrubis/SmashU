@@ -216,6 +216,22 @@ void ApplicationInput::OnKeyDown(bool repeat, SDL_Scancode scancode)
         uiInputs[0].right = true;
         break;
 
+    case SDL_SCANCODE_Z:
+        uiInputs[0].z = true;
+        break;
+
+    case SDL_SCANCODE_S:
+        uiInputs[0].s = true;
+        break;
+
+    case SDL_SCANCODE_Q:
+        uiInputs[0].q = true;
+        break;
+
+    case SDL_SCANCODE_D:
+        uiInputs[0].d = true;
+        break;
+
     case SDL_SCANCODE_SPACE:
         uiInputs[0].validatePressed = true;
         break;
