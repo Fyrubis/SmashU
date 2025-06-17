@@ -178,12 +178,12 @@ StageManager::StageManager(InputManager *inputManager)
     //const StageConfig &stageConfig = g_gameCommon.stageConfig;
     //switch (stageConfig.bombsFrequency)
     //{
-    //case StageConfig::Frequency::RARELY:
-    //case StageConfig::Frequency::SOMETIMES:
-    //case StageConfig::Frequency::OFTEN:
-    //    break;
-    //default:
-    //    break;
+    //    case StageConfig::Frequency::RARELY:
+    //    case StageConfig::Frequency::SOMETIMES:
+    //    case StageConfig::Frequency::OFTEN:
+    //        break;
+    //    default:
+    //        break;
     //}
 }
 

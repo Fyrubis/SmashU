@@ -179,7 +179,7 @@ bool PlayerControllerSystem::OnPlayerFall(
 }
 
 void PlayerControllerSystem::FixedUpdateShieldAndDamage(
-    const PlayerAffiliation &affiliation, const GroundContact &ground, PlayerController &controller, Damageable &damageable)
+    const PlayerAffiliation &affiliation, const GroundContact &ground,PlayerController &controller, Damageable &damageable)
 {
     const float score = damageable.cumulativeDamage.amount;
     if (controller.currState == PlayerState::ROLL || score < 1.f)
@@ -287,8 +287,10 @@ void PlayerControllerSystem::FixedUpdateState(
                 // TODO - Déterminez si le personnage doit passer dans l'état
                 //        PlayerState::SMASH_RELEASE
                 //        Utilisez input.attackDown
-                if(!input.attackDown)
+                if (input.attackDown == 0)
+                {
                     PlayerUtils::SetState(controller, PlayerState::SMASH_RELEASE);
+                };
                 
                 
                 // BONUS - Utilisez aussi controller.delaySmashReleaseMin et
@@ -302,35 +304,33 @@ void PlayerControllerSystem::FixedUpdateState(
                 // TODO - Déterminez quelle attaque le personnage doit commencer.
                 //        Utilisez input.attackType pour attribuer les états
                 //        SMASH_HOLD, ATTACK_SPECIAL ou ATTACK_COMBO.
-
-
-                switch (input.attackType) {
+               
+                switch (input.attackType)
+                {
+                    case AttackType::SMASH:
+                        printf("smash");
+                        PlayerUtils::SetState(controller, PlayerState::SMASH_HOLD);
+                        break;
                     case AttackType::COMBO:
+                        printf("combo");
                         PlayerUtils::SetState(controller, PlayerState::ATTACK_COMBO);
                         break;
                     case AttackType::SPECIAL:
-                        PlayerUtils::SetState(controller, PlayerState::ATTACK_SPECIAL);
+                        printf("special");
+                        PlayerUtils::SetState(controller, PlayerState::ATTACK_SPECIAL);             
                         break;
-                    case AttackType::SMASH:
-                        PlayerUtils::SetState(controller, PlayerState::SMASH_HOLD);
-                        break;
-                    default:
-                        PlayerUtils::SetState(controller, PlayerState::IDLE);
-                        break;
-                }
+                };
                 controller.delayAttack = -1.f;
-
             }
             else
             {
                 // TODO - Déterminez si le personnage doit être dans l'état IDLE ou RUN.
                 //        Testez si (fabsf(velocity.x) < 0.5f) pour savoir si le personnage
                 //        a une vitesse horizontale suffisante.
-
-                if (fabsf(velocity.x) >= 0.5f)
-                    PlayerUtils::SetState(controller, PlayerState::RUN);
                 if (fabsf(velocity.x) < 0.5f)
                     PlayerUtils::SetState(controller, PlayerState::IDLE);
+                if (fabsf(velocity.x) >= 0.5f)
+                    PlayerUtils::SetState(controller, PlayerState::RUN);
               
             }
         }

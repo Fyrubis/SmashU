@@ -13,7 +13,7 @@
 
 //#define FULLSCREEN
 //#define WINDOW_FHD
-#define SKIP_MENU
+//#define SKIP_MENU
 
 #ifdef WINDOW_FHD
 #define WINDOW_WIDTH   FHD_WIDTH

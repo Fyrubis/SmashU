@@ -39,6 +39,7 @@ void PlayerInputSystem::OnUpdate(EntityCommandBuffer &ecb)
         {
             controllerInput.attackPressed = true;
             controllerInput.attackType = AttackType::SMASH;
+            
         }
         else if (input.specialPressed)
         {
@@ -53,6 +54,7 @@ void PlayerInputSystem::OnUpdate(EntityCommandBuffer &ecb)
 
             controllerInput.attackPressed = true;
             controllerInput.attackType = AttackType::COMBO;
+
         }
 
         switch (controllerInput.attackType)

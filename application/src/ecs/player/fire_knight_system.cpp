@@ -26,7 +26,8 @@ void FireKnightSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         //        passe à l'état PlayerState::RUN.
 
         // TODO - Plus loin dans le tuto, pour la gestion des attaques,
-        //        liez l'animation ATTACK_1 à l'état ATTACK_COMBO.
+        //        liez l'animation ATTACK_1 à l'état ATTACK_
+        // .
 
         // TODO - Vraiement plus loin dans le tuto, pour le smash,
         //        liez l'animation SMASH_START à l'état SMASH_HOLD,
@@ -43,11 +44,12 @@ void FireKnightSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         case PlayerState::DEFEND: type = AnimType::DEFEND_START; break;
         case PlayerState::LAUNCHED: type = AnimType::JUMP_UP; break;
         case PlayerState::TAKE_DAMAGE: type = AnimType::TAKE_HIT; break;
+        //
         case PlayerState::ATTACK_COMBO: type = AnimType::ATTACK_1; break;
         case PlayerState::ATTACK_SPECIAL: type = AnimType::ATTACK_2; break;
-        case PlayerState::ATTACK_AIR: type = AnimType::ATTACK_3; break;
         case PlayerState::SMASH_HOLD: type = AnimType::SMASH_START; break;
         case PlayerState::SMASH_RELEASE: type = AnimType::SMASH_RELEASE; break;
+        case PlayerState::ROLL: type = AnimType::ROLL;break;
         default: break;
         }
 
@@ -119,7 +121,6 @@ void FireKnightSystem::OnAnimFrameChanged(
         }
         if (animEvent.index == 4)
         {
-            
             // TODO - Effectuez l'attaque sur la frame d'indice 4 et non celle d'indice 2.
 
             b2Vec2 position = transform.position;
@@ -135,7 +136,7 @@ void FireKnightSystem::OnAnimFrameChanged(
             //        en utilisant les outils de debug dans le jeu.
 
             const b2Vec2 center = transform.position + b2Vec2{ s * 0.8f, 1.5f };
-            const float radius = 2.0f;
+            const float radius = 2.f;
             bool hit = DamageUtils::AttackCircle(m_scene, entity, affiliation, damage, filter, center, radius);
             PlayerUtils::PlaySFXHit(m_scene, playerID, SFX_SWORD_HIT_A1, SFXIntensity::NORMAL, hit);
         }
@@ -147,9 +148,9 @@ void FireKnightSystem::OnAnimFrameChanged(
 
         if (animEvent.index == 0)
         {
-            animInfo.autoVelocity = 2.0f;
+            animInfo.autoVelocity = 2.0f*s;
         }
-        animInfo.autoVelocity *= s;
+
         const b2Vec2 position = transform.position;
         Damage damage;
         damage.attackCenter = transform.position;

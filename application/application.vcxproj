@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D5C1C9F0-ECA9-37D0-BDF3-85A5A8106780}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>application</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\_bin\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">application.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">application</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\_bin\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">application.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">application</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b\backends;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\engine\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\cJSON;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\entt-3.15.0\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\magic_enum\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/third_party/SDL3_image/include" /external:I "C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/third_party/SDL3_ttf/include" /external:I "C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/third_party/SDL3_mixer/include" /external:I "C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/third_party/box2d-3.1/include"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b\backends;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\engine\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\cJSON;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\entt-3.15.0\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\magic_enum\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_image\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_ttf\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_mixer\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\box2d-3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b\backends;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\engine\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\cJSON;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\entt-3.15.0\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\magic_enum\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_image\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_ttf\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_mixer\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\box2d-3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\box2d-3.1\lib\box2dd.lib;..\engine\Debug\engine.lib;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_image\lib\SDL3_image.lib;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_ttf\lib\SDL3_ttf.lib;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_mixer\lib\SDL3_mixer.lib;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3\lib\SDL3.lib;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\box2d-3.1\lib\box2dd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/_build_vs/application/Debug/application.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/_bin/Debug/application.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b\backends;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\engine\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\cJSON;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\entt-3.15.0\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\magic_enum\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/third_party/SDL3_image/include" /external:I "C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/third_party/SDL3_ttf/include" /external:I "C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/third_party/SDL3_mixer/include" /external:I "C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/third_party/box2d-3.1/include"</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b\backends;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\engine\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\cJSON;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\entt-3.15.0\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\magic_enum\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_image\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_ttf\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_mixer\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\box2d-3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\imgui-1.91.9b\backends;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\engine\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\cJSON;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\entt-3.15.0\src;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\magic_enum\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_image\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_ttf\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_mixer\include;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\box2d-3.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\box2d-3.1\lib\box2d.lib;..\engine\Release\engine.lib;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_image\lib\SDL3_image.lib;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_ttf\lib\SDL3_ttf.lib;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3_mixer\lib\SDL3_mixer.lib;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\SDL3\lib\SDL3.lib;C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\third_party\box2d-3.1\lib\box2d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/_build_vs/application/Release/application.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/_bin/Release/application.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/application/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/meven/Documents/Dev/Smash Ultimate/SmashU" "-BC:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/_build_vs" --check-stamp-file "C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/_build_vs/application/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\_build_vs\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\_build_vs\application\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/application/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/meven/Documents/Dev/Smash Ultimate/SmashU" "-BC:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/_build_vs" --check-stamp-file "C:/Users/meven/Documents/Dev/Smash Ultimate/SmashU/_build_vs/application/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\_build_vs\CMakeFiles\cmake.verify_globs;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\_build_vs\application\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\common\game_assets.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\common\game_common.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\camera.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\damage_utils.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\kinematic_utils.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\terrain_utils.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\tracked_target.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\visual_id.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\item\bomb.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\item\potion.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\fire_knight_system.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_ai.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_command.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_components.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_controller_system.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_input_system.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_utils.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\shield.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\water_priestess_system.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\stage\star_fields_platform.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\stage\star_fields_terrain.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\imgui\imgui_components.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\imgui\imgui_manager.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\input\application_input.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\input\controls_input.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\input\mouse_input.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\main.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\scene_manager\stage_manager.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\scene_manager\title_manager.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\custom_default\ui_default_button.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\custom_default\ui_default_cursor.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\custom_default\ui_text_list.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\stage\ui_pause_menu.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\stage\ui_stage_hud.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\title\ui_stage_page.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\title\ui_title_background.cpp" />
+    <ClCompile Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\title\ui_title_page.cpp" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\common\game_assets.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\common\game_common.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\common\game_settings.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\camera.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\damage_utils.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\kinematic_utils.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\terrain_utils.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\tracked_target.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\common\visual_id.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\item\bomb.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\item\potion.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\fire_knight_system.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_ai.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_command.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_components.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_controller_system.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_input_system.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\player_utils.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\shield.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\player\water_priestess_system.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\stage\star_fields_platform.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ecs\stage\star_fields_terrain.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\imgui\imgui_components.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\imgui\imgui_manager.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\input\application_input.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\input\controls_input.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\input\mouse_input.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\scene_manager\stage_manager.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\scene_manager\title_manager.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\settings.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\custom_default\ui_default_button.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\custom_default\ui_default_cursor.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\custom_default\ui_text_list.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\stage\ui_pause_menu.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\stage\ui_stage_hud.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\title\ui_stage_page.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\title\ui_title_background.h" />
+    <ClInclude Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\application\src\ui\title\ui_title_page.h" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\_build_vs\ZERO_CHECK.vcxproj">
+      <Project>{70B66BEC-2B91-3A5D-B840-DF1523CAF66F}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\meven\Documents\Dev\Smash Ultimate\SmashU\_build_vs\engine\engine.vcxproj">
+      <Project>{778B3D6C-0292-36AB-8A1E-38F53F6A37DD}</Project>
+      <Name>engine</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

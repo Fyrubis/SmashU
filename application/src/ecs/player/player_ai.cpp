@@ -67,13 +67,13 @@ void PlayerAISystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         }
 
         //// Attaque
-        //if (damageable.lockAttackTime >= 0.f) continue;
-        //if (playerAI.targetDistance <= playerAI.desiredTargetDistance)
-        //{
-        //    input.attackType = AttackType::COMBO;
-        //    input.attackPressed = true;
-        //    input.attackDown = true;
-        //}
+        if (damageable.lockAttackTime >= 0.f) continue;
+        if (playerAI.targetDistance <= playerAI.desiredTargetDistance)
+        {
+            input.attackType = AttackType::COMBO;
+            input.attackPressed = true;
+            input.attackDown = true;
+        }
     }
 }
 
