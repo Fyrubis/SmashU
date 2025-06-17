@@ -227,8 +227,8 @@ void FireKnightSystem::OnAnimFrameChanged(
             Damage damage;
             damage.attackCenter = position;
             damage.amount = 1.f;
-            damage.ejectionType = Damage::Type::NO_EJECTION;
-            //damage.direction = math::UnitVectorDeg(90.f - s * 45.f);
+            damage.ejectionType = Damage::Type::FIXED_DIRECTION;
+            damage.direction = math::UnitVectorDeg(90.f - s * 45.f);
             damage.ejectionSpeed = 9.f;
             damage.lockTime = lockTime;
             damage.lockAttackTime = 10.5f * PLAYER_ATTACK_FRAME_TIME;
