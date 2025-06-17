@@ -302,23 +302,18 @@ void PlayerControllerSystem::FixedUpdateState(
                 //        Utilisez input.attackType pour attribuer les états
                 //        SMASH_HOLD, ATTACK_SPECIAL ou ATTACK_COMBO.
 
-                printf("Check : %d\n\n", input.attackDown);
 
                 switch (input.attackType) {
                     case AttackType::COMBO:
-                        printf("combo\n");
                         PlayerUtils::SetState(controller, PlayerState::ATTACK_COMBO);
                         break;
                     case AttackType::SPECIAL:
-                        printf("special\n");
                         PlayerUtils::SetState(controller, PlayerState::ATTACK_SPECIAL);
                         break;
                     case AttackType::SMASH:
-                        printf("smash\n");
                         PlayerUtils::SetState(controller, PlayerState::ATTACK_AIR);
                         break;
                     default:
-                        printf("idle\n");
                         PlayerUtils::SetState(controller, PlayerState::IDLE);
                         break;
                 }

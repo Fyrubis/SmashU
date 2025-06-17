@@ -115,8 +115,9 @@ void FireKnightSystem::OnAnimFrameChanged(
         {
             PlayerUtils::PlaySFXAttack(m_scene, playerID, SFX_SWORD_ATTACK_3, SFXIntensity::NORMAL);
         }
-        if (animEvent.index == 2)
+        if (animEvent.index == 4)
         {
+            
             // TODO - Effectuez l'attaque sur la frame d'indice 4 et non celle d'indice 2.
 
             b2Vec2 position = transform.position;
@@ -132,7 +133,7 @@ void FireKnightSystem::OnAnimFrameChanged(
             //        en utilisant les outils de debug dans le jeu.
 
             const b2Vec2 center = transform.position + b2Vec2{ s * 0.8f, 1.5f };
-            const float radius = 0.5f;
+            const float radius = 2.0f;
             bool hit = DamageUtils::AttackCircle(m_scene, entity, affiliation, damage, filter, center, radius);
             PlayerUtils::PlaySFXHit(m_scene, playerID, SFX_SWORD_HIT_A1, SFXIntensity::NORMAL, hit);
         }
