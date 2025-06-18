@@ -215,20 +215,17 @@ void UIStagePage::CreateMenu() {
     m_group->AddSelectable(m_player1List);
     m_group->AddSelectable(m_player2List);
     m_group->AddSelectable(m_gamemodeList);
-    m_group->AddSelectable(m_timeList);
-    m_group->AddSelectable(m_liveList);
 
     switch (g_gameCommon.stageConfig.mode)
     {
     default:
     case StageConfig::Mode::LIMITED_LIVES:
         printf("Limited lives\n");
+    m_group->AddSelectable(m_liveList);
 
         m_timeList->SetEnabled(false);
-        m_timeList->SetVisible(false);
 
         m_liveList->SetEnabled(true);
-        m_liveList->SetVisible(true);
 
         break;
 
@@ -236,10 +233,9 @@ void UIStagePage::CreateMenu() {
         printf("Limited time\n");
 
         m_timeList->SetEnabled(true);
-        m_timeList->SetVisible(true);
 
+    m_group->AddSelectable(m_timeList);
         m_liveList->SetEnabled(false);
-        m_liveList->SetVisible(false);
 
         break;
     }
@@ -315,6 +311,11 @@ void UIStagePage::OnClick(UISelectable *which)
 void UIStagePage::OnItemChanged(UISelectable *which, int itemIdx, int prevItemIdx, bool increase)
 {
     UpdateConfigs();
+
+    if (which == m_gamemodeList)
+    {
+        CreateMenu();
+    }
 }
 
 void UIStagePage::OnFadeOutEnd(UIObject *which)
@@ -325,6 +326,10 @@ void UIStagePage::OnFadeOutEnd(UIObject *which)
     if (titleManager == nullptr) return;
 
     titleManager->QuitPage(TitleManager::Page::STAGE);
+}
+
+void UIStagePage::CreateGroup()
+{
 }
 
 void UIStagePage::InitFadeAnim()
@@ -408,7 +413,6 @@ void UIStagePage::UpdateConfigs()
     case 0: g_gameCommon.stageConfig.mode = StageConfig::Mode::LIMITED_LIVES; break;
     case 1: g_gameCommon.stageConfig.mode = StageConfig::Mode::LIMITED_TIME; break;
     }
-    CreateMenu();
 
     switch (m_timeList->GetSelectedItem())
     {

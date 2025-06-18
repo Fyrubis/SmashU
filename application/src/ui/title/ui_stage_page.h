@@ -25,7 +25,7 @@ public:
 
 protected:
     virtual void OnFadeOutEnd(UIObject *which) override;
-
+    void CreateGroup();
 private:
     float m_ratioHeader;
     UIObject *m_header;
