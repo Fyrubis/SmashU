@@ -121,6 +121,33 @@ UIStagePage::UIStagePage(Scene *scene)
     m_timeList->SetIsCycle(false);
     m_timeList->AddSelectableListener(this);
 
+    //--------------------------------------------------------------------------
+    // Life count list
+
+    labelString.assign("Life Count");
+    textStrings.clear();
+    textStrings.push_back("1");
+    textStrings.push_back("2");
+    textStrings.push_back("3");
+    m_liveList = new UITextList(
+        m_scene, labelString, textStrings, Colors::White, textWidth
+    );
+    m_liveList->SetIsCycle(false);
+    m_liveList->AddSelectableListener(this);
+
+    //--------------------------------------------------------------------------
+    // Gamemode list
+
+    labelString.assign("Gamemode");
+    textStrings.clear();
+    textStrings.push_back("Life");
+    textStrings.push_back("Time");
+    m_gamemodeList = new UITextList(
+        m_scene, labelString, textStrings, Colors::White, textWidth
+    );
+    m_gamemodeList->SetIsCycle(false);
+    m_gamemodeList->AddSelectableListener(this);
+
     ////--------------------------------------------------------------------------
     //// TODO : Ajout d'un texte et d'une liste pour la fréquence d'apparition des potions
 
@@ -138,12 +165,12 @@ UIStagePage::UIStagePage(Scene *scene)
     // Grid layouts
 
     // TODO : Modifier le vLayout pour ajouter un champ potion
-    UIGridLayout *vLayout = new UIGridLayout(m_scene, 6, 1); 
+    UIGridLayout *vLayout = new UIGridLayout(m_scene, 9, 1); 
     vLayout->SetParent(m_content);
     vLayout->SetAnchor(Anchor::CENTER);
     vLayout->SetSpacing(2.f);
     vLayout->SetRowSpacing(2, 10.f);
-    vLayout->SetRowSpacing(4, 20.f);
+    vLayout->SetRowSpacing(6, 20.f);
     vLayout->SetRowSize(22.f);
     vLayout->SetColumnSize(300.f);
 
@@ -151,7 +178,9 @@ UIStagePage::UIStagePage(Scene *scene)
     vLayout->AddObject(m_player1List, 1, 0);
     vLayout->AddObject(m_player2List, 2, 0);
     vLayout->AddObject(m_optionText, 3, 0);
-    vLayout->AddObject(m_timeList, 4, 0);
+    vLayout->AddObject(m_gamemodeList, 4, 0);
+    vLayout->AddObject(m_timeList, 5, 0);
+    vLayout->AddObject(m_liveList, 5, 0);
     // TODO : Ajout de l'objet potion
 
     UIGridLayout *hLayout = new UIGridLayout(m_scene, 1, 2);
@@ -163,7 +192,7 @@ UIStagePage::UIStagePage(Scene *scene)
     hLayout->AddObject(m_startButton, 0, 1);
 
     // TODO : Modifier pour laisser la place au champ potion
-    vLayout->AddObject(hLayout, 5, 0);
+    vLayout->AddObject(hLayout, 7, 0);
 
     vLayout->Update();
     hLayout->Update();
@@ -174,12 +203,47 @@ UIStagePage::UIStagePage(Scene *scene)
     InitFadeAnim();
     InitPageWithConfig();
 
-    //--------------------------------------------------------------------------
-    // Navigation
+    CreateMenu();
+}
 
+
+void UIStagePage::CreateMenu() {
+
+    m_group->RemoveAllSelectables();
+
+    printf("CreateMenu :");
     m_group->AddSelectable(m_player1List);
     m_group->AddSelectable(m_player2List);
+    m_group->AddSelectable(m_gamemodeList);
     m_group->AddSelectable(m_timeList);
+    m_group->AddSelectable(m_liveList);
+
+    switch (g_gameCommon.stageConfig.mode)
+    {
+    default:
+    case StageConfig::Mode::LIMITED_LIVES:
+        printf("Limited lives\n");
+
+        m_timeList->SetEnabled(false);
+        m_timeList->SetVisible(false);
+
+        m_liveList->SetEnabled(true);
+        m_liveList->SetVisible(true);
+
+        break;
+
+    case StageConfig::Mode::LIMITED_TIME:
+        printf("Limited time\n");
+
+        m_timeList->SetEnabled(true);
+        m_timeList->SetVisible(true);
+
+        m_liveList->SetEnabled(false);
+        m_liveList->SetVisible(false);
+
+        break;
+    }
+
     m_group->AddSelectable(m_backButton);
     m_group->AddSelectable(m_startButton);
     // TODO : Ajouter la potion
@@ -294,12 +358,29 @@ void UIStagePage::InitPageWithConfig()
         m_player2List->SetFirstSelectedItem(1); break;
     }
 
+    switch (g_gameCommon.stageConfig.mode)
+    {
+    default:
+    case StageConfig::Mode::LIMITED_LIVES:
+        m_gamemodeList->SetFirstSelectedItem(0); break;
+    case StageConfig::Mode::LIMITED_TIME:
+        m_gamemodeList->SetFirstSelectedItem(1); break;
+    }
+
     switch (g_gameCommon.stageConfig.duration)
     {
     default:
     case  1: m_timeList->SetFirstSelectedItem(0); break;
     case  2: m_timeList->SetFirstSelectedItem(1); break;
     case  3: m_timeList->SetFirstSelectedItem(2); break;
+    }
+
+    switch (g_gameCommon.stageConfig.lifeCount)
+    {
+    default:
+    case  1: m_liveList->SetFirstSelectedItem(0); break;
+    case  2: m_liveList->SetFirstSelectedItem(1); break;
+    case  3: m_liveList->SetFirstSelectedItem(2); break;
     }
 
     // TODO : Gérer la fréquence de la potion
@@ -321,12 +402,28 @@ void UIStagePage::UpdateConfigs()
     case 1: g_gameCommon.playerConfigs[1].type = PlayerType::WATER_PRIESTESS; break;
     }
 
+    switch (m_gamemodeList->GetSelectedItem())
+    {
+    default:
+    case 0: g_gameCommon.stageConfig.mode = StageConfig::Mode::LIMITED_LIVES; break;
+    case 1: g_gameCommon.stageConfig.mode = StageConfig::Mode::LIMITED_TIME; break;
+    }
+    CreateMenu();
+
     switch (m_timeList->GetSelectedItem())
     {
     default:
     case 0: g_gameCommon.stageConfig.duration = 1; break;
     case 1: g_gameCommon.stageConfig.duration = 2; break;
     case 2: g_gameCommon.stageConfig.duration = 3; break;
+    }
+
+    switch (m_liveList->GetSelectedItem())
+    {
+    default:
+    case 0: g_gameCommon.stageConfig.lifeCount = 1; break;
+    case 1: g_gameCommon.stageConfig.lifeCount = 2; break;
+    case 2: g_gameCommon.stageConfig.lifeCount = 3; break;
     }
 
     g_gameCommon.UpdatePlayerConfigs();

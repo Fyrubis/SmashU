@@ -39,6 +39,8 @@ private:
     UITextList *m_player1List;
     UITextList *m_player2List;
     UITextList *m_timeList;
+    UITextList *m_liveList;
+    UITextList *m_gamemodeList;
     // TODO : Liste de fréquence pour la potion
 
     UIDefaultButton *m_startButton;
@@ -49,5 +51,6 @@ private:
     void InitFadeAnim();
     void InitPageWithConfig();
     void UpdateConfigs();
+    void CreateMenu();
 };
 

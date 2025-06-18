@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
     playerConfig->skinID = 1;
     playerConfig->isCPU = true;
 
-    g_gameCommon.stageConfig.mode = StageConfig::Mode::LIMITED_TIME;
+    g_gameCommon.stageConfig.mode = StageConfig::Mode::LIMITED_LIVES;
     g_gameCommon.stageConfig.lifeCount = 2;
     g_gameCommon.stageConfig.duration = 3;
 
