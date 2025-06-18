@@ -203,15 +203,14 @@ UIStagePage::UIStagePage(Scene *scene)
     InitFadeAnim();
     InitPageWithConfig();
 
-    CreateMenu();
+    CreateMenu(false);
 }
 
 
-void UIStagePage::CreateMenu() {
+void UIStagePage::CreateMenu(bool menuExist) {
 
     m_group->RemoveAllSelectables();
 
-    printf("CreateMenu :");
     m_group->AddSelectable(m_player1List);
     m_group->AddSelectable(m_player2List);
     m_group->AddSelectable(m_gamemodeList);
@@ -220,7 +219,6 @@ void UIStagePage::CreateMenu() {
     {
     default:
     case StageConfig::Mode::LIMITED_LIVES:
-        printf("Limited lives\n");
     m_group->AddSelectable(m_liveList);
 
         m_timeList->SetEnabled(false);
@@ -230,13 +228,11 @@ void UIStagePage::CreateMenu() {
         break;
 
     case StageConfig::Mode::LIMITED_TIME:
-        printf("Limited time\n");
 
         m_timeList->SetEnabled(true);
 
     m_group->AddSelectable(m_timeList);
         m_liveList->SetEnabled(false);
-
         break;
     }
 
@@ -244,9 +240,12 @@ void UIStagePage::CreateMenu() {
     m_group->AddSelectable(m_startButton);
     // TODO : Ajouter la potion
 
-    m_group->ComputeAutoNavigation();
 
-    m_group->SetSelected(m_player1List);
+    m_group->ComputeAutoNavigation();
+    if (menuExist)
+        m_group->SetSelected(m_gamemodeList);
+    else
+        m_group->SetSelected(m_player1List);
     m_group->SetCursorOnSelected();
 }
 
@@ -313,9 +312,7 @@ void UIStagePage::OnItemChanged(UISelectable *which, int itemIdx, int prevItemId
     UpdateConfigs();
 
     if (which == m_gamemodeList)
-    {
-        CreateMenu();
-    }
+        CreateMenu(true);
 }
 
 void UIStagePage::OnFadeOutEnd(UIObject *which)

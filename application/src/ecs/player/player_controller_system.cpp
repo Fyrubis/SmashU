@@ -308,15 +308,12 @@ void PlayerControllerSystem::FixedUpdateState(
                 switch (input.attackType)
                 {
                     case AttackType::SMASH:
-                        printf("smash");
                         PlayerUtils::SetState(controller, PlayerState::SMASH_HOLD);
                         break;
                     case AttackType::COMBO:
-                        printf("combo");
                         PlayerUtils::SetState(controller, PlayerState::ATTACK_COMBO);
                         break;
                     case AttackType::SPECIAL:
-                        printf("special");
                         PlayerUtils::SetState(controller, PlayerState::ATTACK_SPECIAL);             
                         break;
                 };

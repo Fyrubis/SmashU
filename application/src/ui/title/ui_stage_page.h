@@ -51,6 +51,6 @@ private:
     void InitFadeAnim();
     void InitPageWithConfig();
     void UpdateConfigs();
-    void CreateMenu();
+    void CreateMenu(bool menuExist);
 };
 
