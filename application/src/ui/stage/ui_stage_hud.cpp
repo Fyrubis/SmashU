@@ -62,11 +62,19 @@ UIStageHUD::UIStageHUD(Scene *scene)
     }
 
     // Compteur du temps restant
-    font = assets->GetFont(FONT_TIME);
-    m_timeText = new UIText(scene, "0:00", font, Colors::White);
-    m_timeText->SetParent(this);
-    m_timeText->SetAnchor(Anchor::NORTH_EAST);
-    m_timeText->GetLocalRect().offsetMax = { -10.f, -10.f };
+    switch (g_gameCommon.stageConfig.mode)
+    {
+    default:
+    case StageConfig::Mode::LIMITED_LIVES:
+        break;
+    case StageConfig::Mode::LIMITED_TIME:
+        font = assets->GetFont(FONT_TIME);
+        m_timeText = new UIText(scene, "0:00", font, Colors::White);
+        m_timeText->SetParent(this);
+        m_timeText->SetAnchor(Anchor::NORTH_EAST);
+        m_timeText->GetLocalRect().offsetMax = { -10.f, -10.f };
+        break;
+    }
 }
 
 void UIStageHUD::Update()
@@ -74,15 +82,23 @@ void UIStageHUD::Update()
     UIObject::Update();
 
     StageManager *stageManager = StageManager::GetFromScene(m_scene);
-
-    int minutes = (int)stageManager->GetRemainingTime() / 60;
-    int seconds = (int)stageManager->GetRemainingTime() % 60;
-    char buffer[128] = { 0 };
-
-    sprintf_s(buffer, "%d:%02d", minutes, seconds);
-    m_timeText->SetString(buffer);
-
     const int playerCount = g_gameCommon.playerCount;
+
+    switch (g_gameCommon.stageConfig.mode)
+    {
+    default:
+    case StageConfig::Mode::LIMITED_LIVES:
+        break;
+    case StageConfig::Mode::LIMITED_TIME:
+        int minutes = (int)stageManager->GetRemainingTime() / 60;
+        int seconds = (int)stageManager->GetRemainingTime() % 60;
+        char buffer[128] = { 0 };
+
+        sprintf_s(buffer, "%d:%02d", minutes, seconds);
+        m_timeText->SetString(buffer);
+        break;
+    }
+
     for (int i = 0; i < playerCount; i++)
     {
         const int score = static_cast<int>(g_gameCommon.playerStats[i].ejectionScore);
