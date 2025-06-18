@@ -68,7 +68,7 @@ void PlayerConfig::Update()
 
 StageConfig::StageConfig()
     : type(Type::STAR_FIELDS)
-    , mode(Mode::LIMITED_TIME)
+    , mode(Mode::LIMITED_LIVES)
     , duration(3)
     , lifeCount(3)
     , bombsFrequency(Frequency::SOMETIMES)
