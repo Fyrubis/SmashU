@@ -17,7 +17,7 @@ PlayerAI::PlayerAI(int level)
     , terrainR(false)
     , terrainBelow(false)
     , jumpThresold(0.f)
-    , targetDistance(0.f)
+    , targetDistance(b2Vec2(0.f, 0.f))
     , desiredTargetDistance(2.5f)
     , delayDefend(-1.f)
 {}
@@ -60,15 +60,21 @@ void PlayerAISystem::OnFixedUpdate(EntityCommandBuffer &ecb)
 
         // Se dirige vers la cible
         b2Vec2 targetPosition = target.position;
-        playerAI.targetDistance = fabsf(targetPosition.x - position.x);
-        if (playerAI.targetDistance > playerAI.desiredTargetDistance)
+        playerAI.targetDistance.x = fabsf(targetPosition.x - position.x);
+        if (playerAI.targetDistance.x > playerAI.desiredTargetDistance)
+        {
+            JoinTarget(playerAI, input, target, rigidbody, damageable, controller, ground);
+        }
+
+        playerAI.targetDistance.y = fabsf(targetPosition.y - position.y);
+        if (playerAI.targetDistance.y > 0)
         {
             JoinTarget(playerAI, input, target, rigidbody, damageable, controller, ground);
         }
 
         //// Attaque
         if (damageable.lockAttackTime >= 0.f) continue;
-        if (playerAI.targetDistance <= playerAI.desiredTargetDistance)
+        if (playerAI.targetDistance.x <= playerAI.desiredTargetDistance)
         {
             input.attackType = AttackType::COMBO;
             input.attackPressed = true;
@@ -138,6 +144,11 @@ void PlayerAISystem::JoinTarget(
     else if (position.x > target.position.x + playerAI.desiredTargetDistance)
     {
         input.direction = -1.f;
+    }
+
+    if (position.y < target.position.y)
+    {
+        input.jumpPressed = +1.f;
     }
 }
 
