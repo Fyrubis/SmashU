@@ -4,14 +4,14 @@
     See LICENSE.md in the project root for license information.
 */
 
-#include "ecs/player/water_priestess_system.h"
+#include "ecs/player/Metal_Bladekeeper_system.h"
 #include "ecs/player/player_controller_system.h"
 #include "ecs/player/player_utils.h"
 
-void WaterPriestessSystem::OnFixedUpdate(EntityCommandBuffer& ecb)
+void MetalBladekeeperSystem::OnFixedUpdate(EntityCommandBuffer& ecb)
 {
     auto viewAnim = m_registry.view<
-        const WaterPriestessTag,
+        const MetalBladekeeperTag,
         const PlayerAffiliation,
         PlayerController,
         SpriteAnimState>();
@@ -35,7 +35,7 @@ void WaterPriestessSystem::OnFixedUpdate(EntityCommandBuffer& ecb)
         case PlayerState::LAUNCHED: type = AnimType::JUMP_UP; break;
         case PlayerState::TAKE_DAMAGE: type = AnimType::TAKE_HIT; break;
         case PlayerState::ROLL: type = AnimType::ROLL;break;
-            //
+        //
         case PlayerState::ATTACK_COMBO: type = AnimType::ATTACK_1; break;
         case PlayerState::ATTACK_SPECIAL: type = AnimType::ATTACK_2; break;
         case PlayerState::SMASH_HOLD: type = AnimType::SMASH_START; break;
@@ -51,10 +51,10 @@ void WaterPriestessSystem::OnFixedUpdate(EntityCommandBuffer& ecb)
     }
 }
 
-void WaterPriestessSystem::OnUpdate(EntityCommandBuffer &ecb)
+void MetalBladekeeperSystem::OnUpdate(EntityCommandBuffer &ecb)
 {
     auto viewAnim = m_registry.view<
-        const WaterPriestessTag,
+        const MetalBladekeeperTag,
         const PlayerAffiliation,
         const PlayerControllerInput,
         const Transform,
@@ -81,7 +81,7 @@ void WaterPriestessSystem::OnUpdate(EntityCommandBuffer &ecb)
     }
 }
 
-void WaterPriestessSystem::OnAnimFrameChanged(
+void MetalBladekeeperSystem::OnAnimFrameChanged(
     entt::entity entity,
     const SpriteAnimEvent &animEvent,
     const Transform &transform,
@@ -111,7 +111,7 @@ void WaterPriestessSystem::OnAnimFrameChanged(
         {
             PlayerUtils::PlaySFXAttack(m_scene, playerID, SFX_SWORD_ATTACK_3, SFXIntensity::NORMAL);
         }
-        if (animEvent.index == 2)
+        if (animEvent.index == 1)
         {
             // TODO - Effectuez l'attaque sur la frame d'indice 4 et non celle d'indice 2.
 
@@ -128,26 +128,25 @@ void WaterPriestessSystem::OnAnimFrameChanged(
             //        en utilisant les outils de debug dans le jeu.
 
             const b2Vec2 center = transform.position + b2Vec2{ s * 0.8f, 1.5f };
-            const float radius = 2.f;
+            const float radius = 1.3f;
             bool hit = DamageUtils::AttackCircle(m_scene, entity, affiliation, damage, filter, center, radius);
             PlayerUtils::PlaySFXHit(m_scene, playerID, SFX_SWORD_HIT_A1, SFXIntensity::NORMAL, hit);
         }
     }
     else if (animType == AnimType::ATTACK_2)
     {
-        // TODO - Modifier la vitesse automatique pour lui donner une valeur de 2 unité par seconde.
-        //      - Utilisez la constante s pour modifier la direction.
+        // 
         animInfo.autoVelocity = 0.0f;
 
-        if (animEvent.index == 9)
+        if (animEvent.index == 0)
         {
             PlayerUtils::PlaySFXAttack(m_scene, playerID, SFX_SWORD_ATTACK_3, SFXIntensity::NORMAL);
         }
-        if (animEvent.index == 10)
+        if (animEvent.index == 0)
         {
-            // TODO - Effectuez l'attaque sur la frame d'indice 4 et non celle d'indice 2.
 
             b2Vec2 position = transform.position;
+
             Damage damage;
             damage.attackCenter = position;
             damage.amount = 3.f;
@@ -155,15 +154,14 @@ void WaterPriestessSystem::OnAnimFrameChanged(
             damage.lockTime = lockTime;
             damage.lockAttackTime = 10.5f * PLAYER_ATTACK_FRAME_TIME;
 
-            // TODO - Modifiez le rayon du cercle d'attaque avec la valeur trouvée
-            //        en utilisant les outils de debug dans le jeu.
+            //
 
             const b2Vec2 center = transform.position + b2Vec2{ s * 0.8f, 1.5f };
-            const float radius = 2.f;
+            const float radius = 1.3f;
             bool hit = DamageUtils::AttackCircle(m_scene, entity, affiliation, damage, filter, center, radius);
             PlayerUtils::PlaySFXHit(m_scene, playerID, SFX_SWORD_HIT_A1, SFXIntensity::NORMAL, hit);
         }
-
+       
     }
     else if (animType == AnimType::ATTACK_3)
     {
@@ -173,7 +171,7 @@ void WaterPriestessSystem::OnAnimFrameChanged(
         {
             PlayerUtils::PlaySFXAttack(m_scene, playerID, SFX_FIRE_2, SFXIntensity::STRONG);
         }
-        else if (animEvent.index == 5)
+        else if (animEvent.index == 3)
         {
             // TODO - Modifiez les dommages pour effectuer une ejection.
 
@@ -200,7 +198,7 @@ void WaterPriestessSystem::OnAnimFrameChanged(
         {
             PlayerUtils::PlaySFXAttack(m_scene, playerID, SFX_FIRE_2, SFXIntensity::STRONG);
         }
-        else if (animEvent.index == 4)
+        else if (animEvent.index == 3)
         {
             // TODO - Modifiez les dommages pour effectuer une ejection.
 
@@ -208,44 +206,40 @@ void WaterPriestessSystem::OnAnimFrameChanged(
             Damage damage;
             damage.attackCenter = position;
             damage.amount = 1.f;
-            damage.ejectionType = Damage::Type::FIXED_DIRECTION;
+            damage.ejectionType = Damage::Type::NO_EJECTION;
             damage.direction = math::UnitVectorDeg(90.f - s * 45.f);
             damage.ejectionSpeed = 9.f;
             damage.lockTime = lockTime;
             damage.lockAttackTime = 10.5f * PLAYER_ATTACK_FRAME_TIME;
 
-            const b2Vec2 boxCenter = transform.position + b2Vec2{ s * 2.f, 1.5f };
+            const b2Vec2 boxCenter = transform.position + b2Vec2{ s * 1.f, 1.5f };
             bool hit = DamageUtils::AttackBox(m_scene, entity, affiliation, damage, filter, boxCenter, 2.f, 1.5f);
             PlayerUtils::PlaySFXHit(m_scene, playerID, SFX_SWORD_HIT_A1, SFXIntensity::STRONG, hit);
         }
-
     }
     else if (animType == AnimType::SMASH_RELEASE)
-    {
-        animInfo.autoVelocity = 0.f;
+    {      
 
         if (animEvent.index == 2)
         {
-            PlayerUtils::PlaySFXAttack(m_scene, playerID, SFX_FIRE_2, SFXIntensity::STRONG);
+            PlayerUtils::PlaySFXAttack(m_scene, playerID, SFX_FIRE_2, SFXIntensity::MAX);
         }
         else if (animEvent.index == 5)
         {
-            b2Vec2 position = transform.position;
             Damage damage;
-            damage.attackCenter = position;
+            damage.attackCenter = transform.position + b2Vec2{ s * -2.f , -1.f };
             damage.amount = controller.smashMultiplier * 10.f;
             damage.ejectionType = Damage::Type::CENTER;
-            damage.direction = math::UnitVectorDeg(90.f - s * 45.f);
             damage.ejectionSpeed = controller.smashMultiplier * 12.f;
             damage.lockTime = lockTime;
-            damage.lockAttackTime = 10.5f * PLAYER_ATTACK_FRAME_TIME;
+            damage.lockAttackTime = 5.5f * PLAYER_ATTACK_FRAME_TIME;
 
-            const b2Vec2 boxCenter = transform.position + b2Vec2{ s * 2.f, 1.5f };
-            bool hit = DamageUtils::AttackBox(m_scene, entity, affiliation, damage, filter, boxCenter, 2.f, 1.5f);
-            PlayerUtils::PlaySFXHit(m_scene, playerID, SFX_SWORD_HIT_A1, SFXIntensity::MAX, hit);
+            PlayerUtils::EmitLandDust(m_scene, transform.position, controller.facingRight);
+
+            const b2Vec2 center = transform.position + b2Vec2{ s * 0.1f, 1.f };
+            bool hit = DamageUtils::AttackCircle(m_scene, entity, affiliation, damage, filter, center, 2.5f);
+            PlayerUtils::PlaySFXHit(m_scene, playerID, SFX_SWORD_HIT_A2, SFXIntensity::MAX, hit);
         }
-        //
-        
     }
     else if (animType == AnimType::RUN)
     {
@@ -262,7 +256,7 @@ void WaterPriestessSystem::OnAnimFrameChanged(
     }
 }
 
-void WaterPriestessSystem::OnAnimCycleEnd(
+void MetalBladekeeperSystem::OnAnimCycleEnd(
     entt::entity entity,
     const SpriteAnimEvent &animEvent,
     SpriteAnimState &anim,
@@ -331,7 +325,6 @@ void WaterPriestessSystem::OnAnimCycleEnd(
         nextAnimType = AnimType::ATTACK_1_END;
         break;
     }
-
     // TODO - Décommentez le code suivant.
 
     case AnimType::SMASH_START:

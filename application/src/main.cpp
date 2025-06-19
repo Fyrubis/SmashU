@@ -74,15 +74,17 @@ int main(int argc, char *argv[])
     playerConfig->isCPU = false;
 
     playerConfig = g_gameCommon.GetPlayerConfig(1);
-    playerConfig->type = PlayerType::WATER_PRIESTESS;
+    playerConfig->type = PlayerType::FIRE_KNIGHT;
     playerConfig->teamID = 1;
     playerConfig->playerID = 1;
     playerConfig->skinID = 1;
-    playerConfig->isCPU = true;
+    playerConfig->isCPU = false;
 
     g_gameCommon.stageConfig.mode = StageConfig::Mode::LIMITED_LIVES;
     g_gameCommon.stageConfig.lifeCount = 2;
     g_gameCommon.stageConfig.duration = 3;
+    g_gameCommon.stageConfig.potionFrequency = StageConfig::Frequency::SOMETIMES;
+    g_gameCommon.stageConfig.bombsFrequency = StageConfig::Frequency::SOMETIMES;
 
     g_gameCommon.UpdatePlayerConfigs();
 

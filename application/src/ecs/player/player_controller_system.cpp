@@ -123,7 +123,6 @@ bool PlayerControllerSystem::OnPlayerFall(
     Damageable &damageable,
     PlayerController &controller)
 {
-
     controller.delayAttack = -1.f;
     controller.delayBonusJump = -1.f;
     controller.delayClearLastDamager = -1.f;
@@ -144,14 +143,12 @@ bool PlayerControllerSystem::OnPlayerFall(
     PlayerStats *playerStats = g_gameCommon.GetPlayerStats(affiliation.playerID);
     if (playerStats)
     {
-        printf("%d\n", playerStats->fallCount);
         playerStats->ejectionScore = 0.f;
         playerStats->fallCount++;
         fallCount = playerStats->fallCount;
     }
 
     const StageConfig &stageConfig = g_gameCommon.stageConfig;
-    printf("%d\n\n", stageConfig.lifeCount);
     if (stageConfig.mode == StageConfig::Mode::LIMITED_LIVES)
     {
         if (fallCount >= stageConfig.lifeCount)
@@ -293,6 +290,7 @@ void PlayerControllerSystem::FixedUpdateState(
                 if (input.attackDown == 0)
                 {
                     PlayerUtils::SetState(controller, PlayerState::SMASH_RELEASE);
+                    
                 };
                 
                 
@@ -359,6 +357,16 @@ void PlayerControllerSystem::FixedUpdateState(
         }
         
         // BONUS - Codez ici l'état PlayerState::ATTACK_AIR
+        if (ground.isGrounded == false && controller.delayAttack > 0.f && damageable.lockAttackTime <= 0.f)
+        {
+            if (input.attackPressed)
+            {
+                PlayerUtils::SetState(controller, PlayerState::ATTACK_AIR);
+                controller.delayAttack = -1.f;
+                
+
+            }
+        }
     }
 
     //--------------------------------------------------------------------------
@@ -481,7 +489,7 @@ void PlayerControllerSystem::FixedUpdatePhysics(
     // TODO - Modifiez les conditions du saut.
     //      - Il faut un delayEarlyJump positif et être sur le sol.
 
-    if  (controller.delayEarlyJump > 0 && ground.isGrounded) //ici condition pour le double saut
+    if  (controller.delayEarlyJump > 0 && ground.isGrounded) 
     {
         // TODO 6 - Modifiez la vitesse verticale pour lui donner la valeur du champ jumpImpulse du controller.
         //      - Puis donnez la valeur -1 au délai pour emp
@@ -492,6 +500,18 @@ void PlayerControllerSystem::FixedUpdatePhysics(
         // TODO 6 - Décommentez les lignes suivantes pour jouer un son et émettre un effet de poussière.
         m_scene->GetAssetManager()->PlaySoundFX(SFX_JUMP_GROUND);
         PlayerUtils::EmitJumpDust(m_scene, position, controller.facingRight);
+    }
+    /// DOUBLE SAUT 
+
+    if (ground.isGrounded == false && controller.bonusJumpCount>0)//compte sauts)
+    {
+        if (input.jumpPressed)
+        {
+            velocity.y = controller.jumpImpulse;
+            controller.delayEarlyJump = -1.f;
+            controller.bonusJumpCount--;
+
+        }
     }
 
     //--------------------------------------------------------------------------

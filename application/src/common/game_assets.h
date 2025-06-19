@@ -25,6 +25,7 @@ namespace assets
     void InitSpriteAnimations(Scene *scene);
     void InitAnimations_FireKnight(AssetManager *assets, SpriteAnimManager *animManager);
     void InitAnimations_WaterPriestress(AssetManager *assets, SpriteAnimManager *animManager);
+    void InitAnimations_MetalBladekeeper(AssetManager* assets, SpriteAnimManager* animManager);
 
     std::string AnimIDToString(AnimID animID);
 }
@@ -81,6 +82,7 @@ enum SheetID : uint32_t
 {
     SHEET_FIRE_KNIGHT_0, SHEET_FIRE_KNIGHT_1,
     SHEET_WATER_PRIESTESS_0, SHEET_WATER_PRIESTESS_1,
+    SHEET_METALBLADEKEEPER_0, SHEET_METALBLADEKEEPER_1,
     SHEET_SHIELD,
 
     SHEET_TILESET_STAR_FIELDS,
@@ -115,6 +117,7 @@ enum class AnimCategory : uint32_t
     DEFAULT,
     FIRE_KNIGHT_0, FIRE_KNIGHT_1,
     WATER_PRIESTESS_0, WATER_PRIESTESS_1,
+    METAL_BLADEKEEPER_0, METAL_BLADEKEEPER_1,
     ITEM,
     VFX,
     DUST

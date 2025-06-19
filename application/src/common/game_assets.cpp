@@ -85,6 +85,8 @@ void assets::InitAssets(AssetManager *assets)
         { SHEET_FIRE_KNIGHT_1, "atlas/fighter/fire_knight_1.json" },
         { SHEET_WATER_PRIESTESS_0, "atlas/fighter/water_priestess_0.json" },
         { SHEET_WATER_PRIESTESS_1, "atlas/fighter/water_priestess_1.json" },
+        { SHEET_METALBLADEKEEPER_0, "atlas/fighter/Metal_bladekeeper_1.json"},
+        { SHEET_METALBLADEKEEPER_1,"atlas/fighter/Metal_bladekeeper_2.json"},
         { SHEET_SHIELD, "atlas/Shield.json" },
         // Item
         { SHEET_ITEM_POTION, "atlas/item/potion.json" },
@@ -248,6 +250,7 @@ void assets::InitSpriteAnimations(Scene *scene)
 
     assets::InitAnimations_FireKnight(assets, animManager);
     assets::InitAnimations_WaterPriestress(assets, animManager);
+    assets::InitAnimations_MetalBladekeeper(assets, animManager);
 }
 
 void assets::InitAnimations_FireKnight(AssetManager *assets, SpriteAnimManager *animManager)
@@ -306,10 +309,9 @@ void assets::InitAnimations_FireKnight(AssetManager *assets, SpriteAnimManager *
 
 void assets::InitAnimations_WaterPriestress(AssetManager *assets, SpriteAnimManager *animManager)
 {
-    const float attackFPS = 2.f / PLAYER_ATTACK_FRAME_TIME;
+    const float attackFPS = 1.f / PLAYER_ATTACK_FRAME_TIME;
 
     static const PlayerAnimLoadInfo animationsToLoad[] = {
-        { AnimType::IDLE, "Idle", 15.f, -1 },
         // TODO : Ajouter les autres animations
         { AnimType::IDLE, "Idle", 15.f, -1 },
         { AnimType::RUN, "Running", 22.f, -1 },
@@ -354,6 +356,56 @@ void assets::InitAnimations_WaterPriestress(AssetManager *assets, SpriteAnimMana
         }
     }
 }
+
+void assets::InitAnimations_MetalBladekeeper(AssetManager* assets, SpriteAnimManager* animManager)
+{
+    const float attackFPS = 1.f / PLAYER_ATTACK_FRAME_TIME;
+
+    static const PlayerAnimLoadInfo animationsToLoad[] = {
+        // TODO : Ajouter les autres animations
+        { AnimType::IDLE, "Idle", 15.f, -1 },
+        { AnimType::RUN, "Running", 22.f, -1 },
+        { AnimType::SKID, "Skidding", 15.f, -1 },
+        { AnimType::ROLL, "Roll", 22.f, 1 },
+        { AnimType::JUMP_UP, "JumpUp", 13.f, 1 },
+        { AnimType::JUMP_TOP, "JumpTop", 20.f, 1 },
+        { AnimType::JUMP_DOWN, "JumpDown", 13.f, -1 },
+        { AnimType::ATTACK_1, "Attack1", attackFPS, 1 },
+        { AnimType::ATTACK_2, "Attack2", attackFPS, 1 },
+        { AnimType::ATTACK_3, "Attack3", attackFPS, 1 },
+        { AnimType::ATTACK_1_END, "Attack1End", attackFPS, 1 },
+        { AnimType::ATTACK_2_END, "Attack2End", attackFPS, 1 },
+        { AnimType::ATTACK_AIR, "AttackAir", attackFPS, 1 },
+        { AnimType::SMASH_START, "SmashStart", 20.f, 1 },
+        { AnimType::SMASH_HOLD, "SmashHold", 15.f, -1 },
+        { AnimType::SMASH_RELEASE, "SmashRelease", attackFPS, 1 },
+        { AnimType::DEFEND_START, "Defend", 20.f, 1 },
+        { AnimType::DEFEND, "Defend", 20.f, -1 },
+        { AnimType::TAKE_HIT, "TakeHit", 25.f, 1 },
+        { AnimType::PLAYER_INTRO, "Introduction", 25.f, 1 },
+    };
+    static const AnimCategory categories[] = { AnimCategory::METAL_BLADEKEEPER_0, AnimCategory::METAL_BLADEKEEPER_1 };
+    static const int sheetIDs[] = { SHEET_METALBLADEKEEPER_0, SHEET_METALBLADEKEEPER_1 };
+
+    for (int i = 0; i < 2; i++)
+    {
+        for (const auto& animToLoad : animationsToLoad)
+        {
+            auto* spriteSheet = assets->GetSpriteSheet(sheetIDs[i]);
+            AssertNew(spriteSheet);
+
+            SpriteGroup* spriteGroup = spriteSheet->GetGroup(animToLoad.groupName);
+            AssertNew(spriteGroup);
+
+            uint32_t animID = AnimID_Make(categories[i], animToLoad.type);
+            animManager->AddSpriteAnim(animID, spriteGroup);
+            SpriteAnim* spriteAnim = animManager->GetSpriteAnim(animID);
+            AssertNew(spriteAnim);
+            spriteAnim->SetCycleCount(animToLoad.loopCount);
+            spriteAnim->SetFPS(animToLoad.fps);
+        }
+    }
+};
 
 std::string assets::AnimIDToString(AnimID animID)
 {

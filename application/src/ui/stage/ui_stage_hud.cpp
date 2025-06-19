@@ -99,8 +99,16 @@ UIStageHUD::UIStageHUD(Scene* scene)
         break;
 
     case StageConfig::Mode::LIMITED_TIME:
+
         for (int i = 0; i < playerCount; i++)
         {
+            fillImage = new UIImage(m_scene, spriteGroup, 1);
+            fillImage->SetBorders(6, 6, 6, 6, 4.f);
+            fillImage->SetOpacity(0.5f);
+            fillImage->SetLayer(LAYER_UI_BACKGROUND);
+            fillImage->SetParent(this);
+            hLayout->AddObject(fillImage, 0, i);
+
             // Compteur des dégats
             font = assets->GetFont(FONT_DAMAGE);
             UIText* text = new UIText(scene, "0%", font, Colors::White);
