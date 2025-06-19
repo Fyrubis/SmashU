@@ -10,6 +10,7 @@
 UIStageHUD::UIStageHUD(Scene* scene)
     : UIObject(scene)
     , m_damageTexts()
+    , m_lifeText()
     , m_timeText(nullptr)
 {
     SetName("Stage HUD");
@@ -37,7 +38,7 @@ UIStageHUD::UIStageHUD(Scene* scene)
         hLayout->SetRowSize(30.f);
         for (int i = 0; i < playerCount; i++) {
             hLayout->SetColumnSize(i*2, 70.f);  // Percent
-            hLayout->SetColumnSize(i*2 +1, 30.f); // Lives
+            hLayout->SetColumnSize(i*2 +1, 85.f); // Lives
             if(i*2 -1 > 0)
                 hLayout->SetColumnSpacing(i*2 -1, 60.f);
         }
@@ -85,12 +86,31 @@ UIStageHUD::UIStageHUD(Scene* scene)
             text->SetAnchor(Anchor::CENTER);
 
             hLayout->AddObject(text, 0, i * 2);
+            m_damageTexts.push_back(text);
+
+
+            font = assets->GetFont(FONT_DAMAGE);
+            text = new UIText(scene, "Vie : 0", font, Colors::White);
+            text->SetAnchor(Anchor::CENTER);
+
+            hLayout->AddObject(text, 0, i*2 +1);
+            m_lifeText.push_back(text);
+        }
+        break;
+
+    case StageConfig::Mode::LIMITED_TIME:
+        for (int i = 0; i < playerCount; i++)
+        {
+            // Compteur des dégats
+            font = assets->GetFont(FONT_DAMAGE);
+            UIText* text = new UIText(scene, "0%", font, Colors::White);
+            text->SetAnchor(Anchor::CENTER);
+
+            hLayout->AddObject(text, 0, i);
 
             m_damageTexts.push_back(text);
         }
         break;
-
-    case StageConfig::Mode::LIMITED_TIME: break;
     }
 
     // Compteur du temps restant
@@ -120,19 +140,31 @@ void UIStageHUD::Update()
     {
     default:
     case StageConfig::Mode::LIMITED_LIVES:
+        
+        for (int i = 0; i < playerCount; i++) {
+            const PlayerStats* player = g_gameCommon.GetPlayerStats(i);
+            const int life = static_cast<int>(g_gameCommon.stageConfig.lifeCount - player->fallCount);
+
+            char buffer[128] = { 0 };
+            m_lifeText[i]->SetString("Vie : " + std::to_string(life));
+        }
         break;
+
+
     case StageConfig::Mode::LIMITED_TIME:
+        
         int minutes = (int)stageManager->GetRemainingTime() / 60;
         int seconds = (int)stageManager->GetRemainingTime() % 60;
         char buffer[128] = { 0 };
 
         sprintf_s(buffer, "%d:%02d", minutes, seconds);
         m_timeText->SetString(buffer);
-        break;
+            break;
     }
 
     for (int i = 0; i < playerCount; i++)
     {
+        
         const int score = static_cast<int>(g_gameCommon.playerStats[i].ejectionScore);
         m_damageTexts[i]->SetString(std::to_string(score) + "%");
     }
