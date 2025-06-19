@@ -58,7 +58,7 @@ struct PlayerController
     float delaySmashReleaseMax;
     float delayCoyoteJump;
     float delayBonusJump;
-    float delayClearLastDamager;
+    float delayClearLastDamager; 
 
     float groundAcc;
     float airAcc;

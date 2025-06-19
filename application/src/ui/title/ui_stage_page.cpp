@@ -403,7 +403,7 @@ void UIStagePage::InitPageWithConfig()
     case PlayerType::WATER_PRIESTESS: 
         m_player2List->SetFirstSelectedItem(1); break;
     case PlayerType::METAL_BLADEKEEPER:
-        m_player1List->SetFirstSelectedItem(2); break;
+        m_player2List->SetFirstSelectedItem(2); break;
     }
 
     switch (g_gameCommon.stageConfig.mode)
@@ -475,7 +475,7 @@ void UIStagePage::UpdateConfigs()
     default:
     case 0: g_gameCommon.playerConfigs[1].type = PlayerType::FIRE_KNIGHT; break;
     case 1: g_gameCommon.playerConfigs[1].type = PlayerType::WATER_PRIESTESS; break;
-    case 2: g_gameCommon.playerConfigs[0].type = PlayerType::METAL_BLADEKEEPER; break;
+    case 2: g_gameCommon.playerConfigs[1].type = PlayerType::METAL_BLADEKEEPER; break;
     }
 
     switch (m_AIList->GetSelectedItem())
