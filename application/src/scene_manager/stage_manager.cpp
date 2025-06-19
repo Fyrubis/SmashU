@@ -347,6 +347,7 @@ void StageManager::InitStarFields()
     // Stage
     StarFieldsTerrainCommand::Create(registry, registry.create(), scene, b2Vec2_zero);
     StarFieldsPlatformCommand::Create(registry, registry.create(), scene, b2Vec2{ -7.0f, 4.5f }, 0);
+    StarFieldsPlatformCommand::Create(registry, registry.create(), scene, b2Vec2{ 12.0f, 6.5f }, 1);
 
     // Crée les joueurs
     b2Vec2 startPositions[4] = {
@@ -386,7 +387,7 @@ void StageManager::InitStarFields()
         backgroundLayer.mode = modes[i];
         backgroundLayer.shiftFactor = b2Vec2{ factors[i], 0.9f * factors[i] };
 
-        b2Vec2 position = b2Vec2{ 0.f, -5.f } + 0.5f * backgroundLayer.dimensions;
+        b2Vec2 position = b2Vec2{ 0.f, 0.f } + 0.5f * backgroundLayer.dimensions;
 
         registry.emplace<NameComponent>(layerEntity, "Background layer " + std::to_string(i));
         registry.emplace<BackgroundLayer>(layerEntity, backgroundLayer);
