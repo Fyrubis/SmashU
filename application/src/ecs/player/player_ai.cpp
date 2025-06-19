@@ -20,6 +20,7 @@ PlayerAI::PlayerAI(int level)
     , targetDistance(b2Vec2(0.f, 0.f))
     , desiredTargetDistance(2.5f)
     , delayDefend(-1.f)
+    , bonusjump(0.f)
 {}
 
 void PlayerAISystem::OnFixedUpdate(EntityCommandBuffer &ecb)
@@ -67,10 +68,12 @@ void PlayerAISystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         }
 
         playerAI.targetDistance.y = fabsf(targetPosition.y - position.y);
-        if (playerAI.targetDistance.y > 0)
+        if (playerAI.targetDistance.y > 1.f)
         {
-            JoinTarget(playerAI, input, target, rigidbody, damageable, controller, ground);
+            input.jumpPressed = true;
         }
+        else
+            input.jumpPressed = false;
 
         //// Attaque
         if (damageable.lockAttackTime >= 0.f) continue;
@@ -79,6 +82,10 @@ void PlayerAISystem::OnFixedUpdate(EntityCommandBuffer &ecb)
             input.attackType = AttackType::COMBO;
             input.attackPressed = true;
             input.attackDown = true;
+        }
+
+        if (input.jumpPressed == true && ground.isGrounded == false && playerAI.targetDistance.y > 0) {
+            b2Body_SetGravityScale(rigidbody.bodyId, .5f);
         }
     }
 }
@@ -146,9 +153,9 @@ void PlayerAISystem::JoinTarget(
         input.direction = -1.f;
     }
 
-    if (position.y < target.position.y)
+    if (position.y + .5f < target.position.y)
     {
-        input.jumpPressed = +1.f;
+        input.jumpPressed = true;
     }
 }
 
@@ -194,7 +201,7 @@ void PlayerAISystem::SearchTerrain(
 }
 
 void PlayerAISystem::ResetInput(PlayerControllerInput &input)
-{
+{          
     input.direction = 0.f;
     input.jumpPressed = false;
     input.jumpDown = false;

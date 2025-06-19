@@ -501,6 +501,19 @@ void PlayerControllerSystem::FixedUpdatePhysics(
         m_scene->GetAssetManager()->PlaySoundFX(SFX_JUMP_GROUND);
         PlayerUtils::EmitJumpDust(m_scene, position, controller.facingRight);
     }
+
+    /*
+    int IA = -1;
+    for (int i = 0; i < g_gameCommon.playerCount; i++) {
+        PlayerConfig *config = g_gameCommon.GetPlayerConfig(i);
+        PlayerStats *stats = g_gameCommon.GetPlayerStats(i);
+    }
+
+    velocity;
+    
+    //*/
+
+
     /// DOUBLE SAUT 
 
     if (ground.isGrounded == false && controller.bonusJumpCount>0)//compte sauts)
@@ -516,10 +529,10 @@ void PlayerControllerSystem::FixedUpdatePhysics(
 
     //--------------------------------------------------------------------------
     // Saut long
-
+    
+    
     if (ground.isGrounded == false && velocity.y > 0.f)
     {
-        // TODO - Appliquez un facteur de gravité de 0.5 si le champ jumpDown vaut true et 1.0 sinon. 
         float scale = 1.f;
         if (input.jumpDown)
             scale = 0.5f;

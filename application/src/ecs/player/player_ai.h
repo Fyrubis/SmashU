@@ -30,6 +30,8 @@ struct PlayerAI
     float desiredTargetDistance;
     b2Vec2 targetDistance;
     float delayDefend;
+
+    float bonusjump;
 };
 
 class PlayerAISystem : public System
