@@ -123,6 +123,7 @@ bool PlayerControllerSystem::OnPlayerFall(
     Damageable &damageable,
     PlayerController &controller)
 {
+
     controller.delayAttack = -1.f;
     controller.delayBonusJump = -1.f;
     controller.delayClearLastDamager = -1.f;
@@ -143,12 +144,14 @@ bool PlayerControllerSystem::OnPlayerFall(
     PlayerStats *playerStats = g_gameCommon.GetPlayerStats(affiliation.playerID);
     if (playerStats)
     {
+        printf("%d\n", playerStats->fallCount);
         playerStats->ejectionScore = 0.f;
         playerStats->fallCount++;
         fallCount = playerStats->fallCount;
     }
 
     const StageConfig &stageConfig = g_gameCommon.stageConfig;
+    printf("%d\n\n", stageConfig.lifeCount);
     if (stageConfig.mode == StageConfig::Mode::LIMITED_LIVES)
     {
         if (fallCount >= stageConfig.lifeCount)

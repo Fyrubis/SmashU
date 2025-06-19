@@ -198,9 +198,23 @@ void StageManager::OnSceneUpdate()
     ApplicationInput *applicationInput = ApplicationInput::GetFromManager(inputManager);
 
     m_delayStage -= scene->GetDelta();
-    if (m_delayStage < 0.f)
+    PlayerStats *player;
+    switch(g_gameCommon.stageConfig.mode)
     {
-        QuitScene();
+    default:
+    case StageConfig::Mode::LIMITED_LIVES:
+        for (int i = 0; i < g_gameCommon.playerCount; i++) {
+            player = g_gameCommon.GetPlayerStats(i);
+            if (player->fallCount >= g_gameCommon.stageConfig.lifeCount)
+                QuitScene();
+        }
+        break;
+    case StageConfig::Mode::LIMITED_TIME:
+        if (m_delayStage < 0.f)
+        {
+            QuitScene();
+        }
+        break;
     }
 
     if (applicationInput->pausePressed)

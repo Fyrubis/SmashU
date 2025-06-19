@@ -145,7 +145,7 @@ UIStagePage::UIStagePage(Scene *scene)
     m_gamemodeList = new UITextList(
         m_scene, labelString, textStrings, Colors::White, textWidth
     );
-    m_gamemodeList->SetIsCycle(false);
+    m_gamemodeList->SetIsCycle(true);
     m_gamemodeList->AddSelectableListener(this);
 
     ////--------------------------------------------------------------------------
