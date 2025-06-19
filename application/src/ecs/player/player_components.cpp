@@ -50,9 +50,8 @@ PlayerController::PlayerController(PlayerType type)
     switch (type)
     {
     default:
-    case PlayerType::FIRE_KNIGHT:
-    case PlayerType::METAL_BLADEKEEPER:
     case PlayerType::LEAF_RANGER:
+    case PlayerType::FIRE_KNIGHT:
         airAcc = 30.f;
         groundAcc = 60.f;
         maxSpeed = 8.f;
@@ -62,9 +61,16 @@ PlayerController::PlayerController(PlayerType type)
     case PlayerType::WATER_PRIESTESS:
         airAcc = 40.f;
         groundAcc = 60.f;
-        maxSpeed = 12.f;
-        maxBonusJumpCount = 2;
+        maxSpeed = 10.f;
+        maxBonusJumpCount = 1;
         jumpImpulse = 16.f;
+        break;
+    case PlayerType::METAL_BLADEKEEPER:
+        airAcc = 40.f;
+        groundAcc = 60.f;
+        maxSpeed = 10.f;
+        maxBonusJumpCount = 1;
+        jumpImpulse = 17.f;
         break;
     }
 }

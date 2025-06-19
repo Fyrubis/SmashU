@@ -93,6 +93,7 @@ UIStagePage::UIStagePage(Scene *scene)
     labelString.assign("Player 1");
     textStrings.push_back("Fire knight");
     textStrings.push_back("Water priestess");
+    textStrings.push_back("Metal Bladekeeper");
     m_player1List = new UITextList(
         m_scene, labelString, textStrings, Colors::White, textWidth
     );
@@ -106,6 +107,17 @@ UIStagePage::UIStagePage(Scene *scene)
     );
     m_player2List->SetIsCycle(true);
     m_player2List->AddSelectableListener(this);
+
+    // is AI 
+    labelString.assign("Player 2 mode");
+    textStrings.clear();
+    textStrings.push_back("Player");
+    textStrings.push_back("AI");
+    m_AIList = new UITextList(
+        m_scene, labelString, textStrings, Colors::White, textWidth
+    );
+    m_AIList->SetIsCycle(true);
+    m_AIList->AddSelectableListener(this);
 
     //--------------------------------------------------------------------------
     // Stage duration list
@@ -150,6 +162,30 @@ UIStagePage::UIStagePage(Scene *scene)
 
     ////--------------------------------------------------------------------------
     //// TODO : Ajout d'un texte et d'une liste pour la fréquence d'apparition des potions
+    labelString.assign("Potions frequency");
+    textStrings.clear();
+    textStrings.push_back("Never");
+    textStrings.push_back("Rarely");
+    textStrings.push_back("Sometimes");
+    textStrings.push_back("Often");
+    m_potionsList = new UITextList(
+        m_scene, labelString, textStrings, Colors::White, textWidth
+    );
+    m_potionsList->SetIsCycle(false);
+    m_potionsList->AddSelectableListener(this);
+
+    // Pour les bombes
+    labelString.assign("Bombs frequency");
+    textStrings.clear();
+    textStrings.push_back("Never");
+    textStrings.push_back("Rarely");
+    textStrings.push_back("Sometimes");
+    textStrings.push_back("Often");
+    m_bombsList = new UITextList(
+        m_scene, labelString, textStrings, Colors::White, textWidth
+    );
+    m_bombsList->SetIsCycle(false);
+    m_bombsList->AddSelectableListener(this);
 
 
     //--------------------------------------------------------------------------
@@ -165,22 +201,25 @@ UIStagePage::UIStagePage(Scene *scene)
     // Grid layouts
 
     // TODO : Modifier le vLayout pour ajouter un champ potion
-    UIGridLayout *vLayout = new UIGridLayout(m_scene, 9, 1); 
+    UIGridLayout *vLayout = new UIGridLayout(m_scene, 11, 1); 
     vLayout->SetParent(m_content);
     vLayout->SetAnchor(Anchor::CENTER);
     vLayout->SetSpacing(2.f);
-    vLayout->SetRowSpacing(2, 10.f);
-    vLayout->SetRowSpacing(6, 20.f);
+    vLayout->SetRowSpacing(3, 10.f);
+    vLayout->SetRowSpacing(8, 20.f);
     vLayout->SetRowSize(22.f);
     vLayout->SetColumnSize(300.f);
 
     vLayout->AddObject(m_playerText, 0, 0);
     vLayout->AddObject(m_player1List, 1, 0);
     vLayout->AddObject(m_player2List, 2, 0);
-    vLayout->AddObject(m_optionText, 3, 0);
-    vLayout->AddObject(m_gamemodeList, 4, 0);
-    vLayout->AddObject(m_timeList, 5, 0);
-    vLayout->AddObject(m_liveList, 5, 0);
+    vLayout->AddObject(m_AIList, 3, 0);
+    vLayout->AddObject(m_optionText, 4, 0);
+    vLayout->AddObject(m_gamemodeList, 5, 0);
+    vLayout->AddObject(m_timeList, 6, 0);
+    vLayout->AddObject(m_liveList, 6, 0);
+    vLayout->AddObject(m_potionsList, 7, 0);
+    vLayout->AddObject(m_bombsList, 8, 0);
     // TODO : Ajout de l'objet potion
 
     UIGridLayout *hLayout = new UIGridLayout(m_scene, 1, 2);
@@ -192,7 +231,7 @@ UIStagePage::UIStagePage(Scene *scene)
     hLayout->AddObject(m_startButton, 0, 1);
 
     // TODO : Modifier pour laisser la place au champ potion
-    vLayout->AddObject(hLayout, 7, 0);
+    vLayout->AddObject(hLayout, 9, 0);
 
     vLayout->Update();
     hLayout->Update();
@@ -213,6 +252,7 @@ void UIStagePage::CreateMenu(bool menuExist) {
 
     m_group->AddSelectable(m_player1List);
     m_group->AddSelectable(m_player2List);
+    m_group->AddSelectable(m_AIList);
     m_group->AddSelectable(m_gamemodeList);
 
     switch (g_gameCommon.stageConfig.mode)
@@ -236,6 +276,8 @@ void UIStagePage::CreateMenu(bool menuExist) {
         break;
     }
 
+    m_group->AddSelectable(m_potionsList);
+    m_group->AddSelectable(m_bombsList);
     m_group->AddSelectable(m_backButton);
     m_group->AddSelectable(m_startButton);
     // TODO : Ajouter la potion
@@ -349,6 +391,8 @@ void UIStagePage::InitPageWithConfig()
         m_player1List->SetFirstSelectedItem(0); break;
     case PlayerType::WATER_PRIESTESS: 
         m_player1List->SetFirstSelectedItem(1); break;
+    case PlayerType::METAL_BLADEKEEPER:
+        m_player1List->SetFirstSelectedItem(2); break;
     }
 
     switch (g_gameCommon.playerConfigs[1].type)
@@ -358,6 +402,8 @@ void UIStagePage::InitPageWithConfig()
         m_player2List->SetFirstSelectedItem(0); break;
     case PlayerType::WATER_PRIESTESS: 
         m_player2List->SetFirstSelectedItem(1); break;
+    case PlayerType::METAL_BLADEKEEPER:
+        m_player1List->SetFirstSelectedItem(2); break;
     }
 
     switch (g_gameCommon.stageConfig.mode)
@@ -385,7 +431,33 @@ void UIStagePage::InitPageWithConfig()
     case  3: m_liveList->SetFirstSelectedItem(2); break;
     }
 
-    // TODO : Gérer la fréquence de la potion
+    switch (g_gameCommon.stageConfig.potionFrequency)
+    {
+    default:
+    case  StageConfig::Frequency::NEVER:
+        m_potionsList->SetFirstSelectedItem(0); break;
+    case  StageConfig::Frequency::RARELY:
+        m_potionsList->SetFirstSelectedItem(1); break;
+    case  StageConfig::Frequency::SOMETIMES:
+        m_potionsList->SetFirstSelectedItem(2); break;
+    case  StageConfig::Frequency::OFTEN:
+        m_potionsList->SetFirstSelectedItem(3); break;
+    
+    }
+    // pareil avec les bombes
+    switch (g_gameCommon.stageConfig.bombsFrequency)
+    {
+    default:
+    case  StageConfig::Frequency::NEVER:
+        m_bombsList->SetFirstSelectedItem(0); break;
+    case  StageConfig::Frequency::RARELY:
+        m_bombsList->SetFirstSelectedItem(1); break;
+    case  StageConfig::Frequency::SOMETIMES:
+        m_bombsList->SetFirstSelectedItem(2); break;
+    case  StageConfig::Frequency::OFTEN:
+        m_bombsList->SetFirstSelectedItem(3); break;
+
+    }
 }
 
 void UIStagePage::UpdateConfigs()
@@ -395,6 +467,7 @@ void UIStagePage::UpdateConfigs()
     default:
     case 0: g_gameCommon.playerConfigs[0].type = PlayerType::FIRE_KNIGHT; break;
     case 1: g_gameCommon.playerConfigs[0].type = PlayerType::WATER_PRIESTESS; break;
+    case 2: g_gameCommon.playerConfigs[0].type = PlayerType::METAL_BLADEKEEPER; break;
     }
 
     switch (m_player2List->GetSelectedItem())
@@ -402,8 +475,16 @@ void UIStagePage::UpdateConfigs()
     default:
     case 0: g_gameCommon.playerConfigs[1].type = PlayerType::FIRE_KNIGHT; break;
     case 1: g_gameCommon.playerConfigs[1].type = PlayerType::WATER_PRIESTESS; break;
+    case 2: g_gameCommon.playerConfigs[0].type = PlayerType::METAL_BLADEKEEPER; break;
     }
 
+    switch (m_AIList->GetSelectedItem())
+    {
+    default:
+    case 0: g_gameCommon.playerConfigs[1].isCPU = false; break;
+    case 1: g_gameCommon.playerConfigs[1].isCPU = true; break;
+    }
+	
     switch (m_gamemodeList->GetSelectedItem())
     {
     default:
@@ -427,6 +508,26 @@ void UIStagePage::UpdateConfigs()
     case 2: g_gameCommon.stageConfig.lifeCount = 3; break;
     }
 
+    switch (m_potionsList->GetSelectedItem())
+    {
+    default:
+    case 0: g_gameCommon.stageConfig.potionFrequency = StageConfig::Frequency::NEVER; break;
+    case 1: g_gameCommon.stageConfig.potionFrequency = StageConfig::Frequency::RARELY; break;
+    case 2: g_gameCommon.stageConfig.potionFrequency = StageConfig::Frequency::SOMETIMES; break;
+    case 3: g_gameCommon.stageConfig.potionFrequency = StageConfig::Frequency::OFTEN; break;
+    }
+
+    //avec les bombes
+    
+    switch (m_bombsList->GetSelectedItem())
+    {
+    default:
+    case 0: g_gameCommon.stageConfig.bombsFrequency = StageConfig::Frequency::NEVER; break;
+    case 1: g_gameCommon.stageConfig.bombsFrequency = StageConfig::Frequency::RARELY; break;
+    case 2: g_gameCommon.stageConfig.bombsFrequency = StageConfig::Frequency::SOMETIMES; break;
+    case 3: g_gameCommon.stageConfig.bombsFrequency = StageConfig::Frequency::OFTEN; break;
+    }
+	
     g_gameCommon.UpdatePlayerConfigs();
 
     // TODO : Gérer la fréquence de la potion

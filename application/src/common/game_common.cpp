@@ -19,7 +19,7 @@ PlayerConfig::PlayerConfig()
     , isCPU(false)
     , isKO(false)
     , teamMask(CATEGORY_TEAM_0)
-    , otherTeamMask(CATEGORY_ALL_TEAMS & (~CATEGORY_TEAM_0))
+    , otherTeamMask(CATEGORY_ALL_TEAMS& (~CATEGORY_TEAM_0))
     , category(AnimCategory::FIRE_KNIGHT_0)
     , level(0)
 {
@@ -39,10 +39,8 @@ void PlayerConfig::Update()
 
     switch (type)
     {
-    case PlayerType::FIRE_KNIGHT:
     case PlayerType::LEAF_RANGER:
-    case PlayerType::METAL_BLADEKEEPER:
-    {
+    case PlayerType::FIRE_KNIGHT:
         switch (skinID)
         {
         default:
@@ -50,9 +48,8 @@ void PlayerConfig::Update()
         case 1: category = AnimCategory::FIRE_KNIGHT_1; break;
         }
         break;
-    }
+
     case PlayerType::WATER_PRIESTESS:
-    {
         switch (skinID)
         {
         default:
@@ -60,9 +57,17 @@ void PlayerConfig::Update()
         case 1: category = AnimCategory::WATER_PRIESTESS_1; break;
         }
         break;
-    }
-    default:
+
+    case PlayerType::METAL_BLADEKEEPER:
+        switch (skinID)
+        {
+        default:
+        case 0: category = AnimCategory::METAL_BLADEKEEPER_0; break;
+        case 1: category = AnimCategory::METAL_BLADEKEEPER_1; break;
+        }
         break;
+
+    default: break;
     }
 }
 
@@ -95,21 +100,21 @@ GameCommon::GameCommon()
 {
 }
 
-PlayerConfig *GameCommon::GetPlayerConfig(int playerID)
+PlayerConfig* GameCommon::GetPlayerConfig(int playerID)
 {
     assert(playerCount <= MAX_PLAYER_COUNT);
     if (playerID < 0 || playerID >= playerCount) return nullptr;
     return &(playerConfigs[playerID]);
 }
 
-const PlayerConfig *GameCommon::GetPlayerConfig(int playerID) const
+const PlayerConfig* GameCommon::GetPlayerConfig(int playerID) const
 {
     assert(playerCount <= MAX_PLAYER_COUNT);
     if (playerID < 0 || playerID >= playerCount) return nullptr;
     return &(playerConfigs[playerID]);
 }
 
-PlayerStats *GameCommon::GetPlayerStats(int playerID)
+PlayerStats* GameCommon::GetPlayerStats(int playerID)
 {
     assert(playerCount <= MAX_PLAYER_COUNT);
     if (playerID < 0 || playerID >= playerCount) return nullptr;
@@ -150,11 +155,11 @@ void GameCommon::ResetPlayerStats()
     }
 }
 
-void InitInputConfig(InputManager *inputManager)
+void InitInputConfig(InputManager* inputManager)
 {
-    ApplicationInput *applicationInput = new ApplicationInput();
-    MouseInput *mouseInput = new MouseInput();
-    ControlsInput *controlsInput = new ControlsInput();
+    ApplicationInput* applicationInput = new ApplicationInput();
+    MouseInput* mouseInput = new MouseInput();
+    ControlsInput* controlsInput = new ControlsInput();
 
     inputManager->AddInputGroup(
         (int)InputID::APPLICATION, applicationInput
@@ -167,7 +172,7 @@ void InitInputConfig(InputManager *inputManager)
     );
 }
 
-float game::GetUIPixelScale(Scene *scene)
+float game::GetUIPixelScale(Scene* scene)
 {
     SDL_Rect viewport = { 0 };
     SDL_GetRenderViewport(g_renderer, &viewport);

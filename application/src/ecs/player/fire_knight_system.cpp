@@ -49,6 +49,7 @@ void FireKnightSystem::OnFixedUpdate(EntityCommandBuffer &ecb)
         case PlayerState::ATTACK_SPECIAL: type = AnimType::ATTACK_2; break;
         case PlayerState::SMASH_HOLD: type = AnimType::SMASH_START; break;
         case PlayerState::SMASH_RELEASE: type = AnimType::SMASH_RELEASE; break;
+        case PlayerState::ATTACK_AIR: type = AnimType::ATTACK_AIR; break;
         case PlayerState::ROLL: type = AnimType::ROLL;break;
         default: break;
         }
@@ -241,6 +242,33 @@ void FireKnightSystem::OnAnimFrameChanged(
             PlayerUtils::PlaySFXHit(m_scene, playerID, SFX_SWORD_HIT_A1, SFXIntensity::STRONG, hit);
         }
     }
+    else if (animType == AnimType::ATTACK_AIR)
+    {
+        animInfo.autoVelocity = 0.f;
+
+        if (animEvent.index == 2)
+        {
+            PlayerUtils::PlaySFXAttack(m_scene, playerID, SFX_FIRE_2, SFXIntensity::STRONG);
+        }
+        else if (animEvent.index == 3)
+        {
+            // TODO - Modifiez les dommages pour effectuer une ejection.
+
+            b2Vec2 position = transform.position;
+            Damage damage;
+            damage.attackCenter = position;
+            damage.amount = 1.f;
+            damage.ejectionType = Damage::Type::NO_EJECTION;
+            damage.direction = math::UnitVectorDeg(90.f - s * 45.f);
+            damage.ejectionSpeed = 9.f;
+            damage.lockTime = lockTime;
+            damage.lockAttackTime = 10.5f * PLAYER_ATTACK_FRAME_TIME;
+
+            const b2Vec2 boxCenter = transform.position + b2Vec2{ s * 2.f, 1.5f };
+            bool hit = DamageUtils::AttackBox(m_scene, entity, affiliation, damage, filter, boxCenter, 2.f, 1.5f);
+            PlayerUtils::PlaySFXHit(m_scene, playerID, SFX_SWORD_HIT_A1, SFXIntensity::STRONG, hit);
+        }
+        }
     else if (animType == AnimType::SMASH_RELEASE)
     {
         switch (animEvent.index)
@@ -349,6 +377,12 @@ void FireKnightSystem::OnAnimCycleEnd(
     case AnimType::TAKE_HIT:
     {
         event.type = PlayerAnimInfo::Event::TAKE_HIT_END;
+        break;
+    }
+    //
+    case AnimType::ATTACK_AIR:
+    {
+        nextAnimType = AnimType::ATTACK_1_END;
         break;
     }
     // TODO - Décommentez le code suivant.

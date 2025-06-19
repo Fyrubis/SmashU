@@ -84,3 +84,4 @@ struct PlayerAnimInfo
 
 struct FireKnightTag {};
 struct WaterPriestessTag {};
+struct MetalBladekeeperTag {};

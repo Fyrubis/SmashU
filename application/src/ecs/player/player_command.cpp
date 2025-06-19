@@ -60,6 +60,7 @@ void PlayerCommand::Create(
     {
     case PlayerType::FIRE_KNIGHT: name = "Fire knight"; break;
     case PlayerType::WATER_PRIESTESS: name = "Water priestess"; break;
+    case PlayerType::METAL_BLADEKEEPER: name = "Metal Bladekeeper"; break;
     default: assert(false); break;
     }
 
@@ -90,6 +91,7 @@ void PlayerCommand::Create(
     {
     case PlayerType::FIRE_KNIGHT: registry.emplace<FireKnightTag>(entity); break;
     case PlayerType::WATER_PRIESTESS: registry.emplace<WaterPriestessTag>(entity); break;
+    case PlayerType::METAL_BLADEKEEPER: registry.emplace<MetalBladekeeperTag>(entity); break;
     default: assert(false); break;
     }
 

@@ -21,6 +21,7 @@
 #include "ecs/player/shield.h"
 #include "ecs/player/fire_knight_system.h"
 #include "ecs/player/water_priestess_system.h"
+#include "ecs/player/Metal_Bladekeeper_system.h"
 #include "ecs/player/player_ai.h"
 
 #include "ecs/item/potion.h"
@@ -78,6 +79,7 @@ StageManager::StageManager(InputManager *inputManager)
     scene->AddSimulationSystem(std::make_shared<PlayerControllerSystem>(scene));
     scene->AddSimulationSystem(std::make_shared<FireKnightSystem>(scene));
     scene->AddSimulationSystem(std::make_shared<WaterPriestessSystem>(scene));
+    scene->AddSimulationSystem(std::make_shared<MetalBladekeeperSystem>(scene));
     scene->AddSimulationSystem(std::make_shared<PlayerShieldSystem>(scene));
 
     // Item
@@ -145,6 +147,7 @@ StageManager::StageManager(InputManager *inputManager)
     imGuiManager->AddTag(std::make_unique<ImGuiTag<ShieldTag>>("Shield tag"));
     imGuiManager->AddTag(std::make_unique<ImGuiTag<FireKnightTag>>("Fire knight tag"));
     imGuiManager->AddTag(std::make_unique<ImGuiTag<WaterPriestessTag>>("Water priestess tag"));
+    imGuiManager->AddTag(std::make_unique<ImGuiTag<MetalBladekeeperTag>>("Metal Bladekeeper tag"));
     imGuiManager->AddTag(std::make_unique<ImGuiTag<PotionTag>>("Potion tag"));
     imGuiManager->AddTag(std::make_unique<ImGuiTag<BombTag>>("Bomb tag"));
 
@@ -170,21 +173,46 @@ StageManager::StageManager(InputManager *inputManager)
     m_stageHUD = new UIStageHUD(scene);
 
     // Délais pour les potions et les bombes
-    m_delayBomb = random::RangeF(5.f, 15.f);
-    m_delayPotion = random::RangeF(5.f, 15.f);
+    //m_delayBomb = random::RangeF(5.f, 15.f);
+    //m_delayPotion = random::RangeF(5.f, 15.f);
+    // délais bombes
+	
+    switch (g_gameCommon.stageConfig.bombsFrequency)
+    {
+        case StageConfig::Frequency::NEVER:
+            m_delayBomb = 0;
+        break;
+        case StageConfig::Frequency::RARELY:
+            m_delayBomb = random::RangeF(20.f, 30.f);
+            break;
+        case StageConfig::Frequency::SOMETIMES:
+            m_delayBomb = random::RangeF(10.f, 20.f);
+            break;
+        case StageConfig::Frequency::OFTEN:
+            m_delayBomb = random::RangeF(5.f, 10.f);
+            break;
+        default:
+            break;
+    }
 
-    // BONUS - Modifiez les délais en fonctions des paramètres du jeu
-    
-    //const StageConfig &stageConfig = g_gameCommon.stageConfig;
-    //switch (stageConfig.bombsFrequency)
-    //{
-    //    case StageConfig::Frequency::RARELY:
-    //    case StageConfig::Frequency::SOMETIMES:
-    //    case StageConfig::Frequency::OFTEN:
-    //        break;
-    //    default:
-    //        break;
-    //}
+    //délais potions
+    switch (g_gameCommon.stageConfig.potionFrequency)
+    {
+    case StageConfig::Frequency::NEVER:
+        m_delayPotion = 0;
+        break;
+    case StageConfig::Frequency::RARELY:
+        m_delayPotion = random::RangeF(20.f, 30.f);
+        break;
+    case StageConfig::Frequency::SOMETIMES:
+        m_delayPotion = random::RangeF(10.f, 20.f);
+        break;
+    case StageConfig::Frequency::OFTEN:
+        m_delayPotion = random::RangeF(5.f, 10.f);
+        break;
+    default:
+        break;
+    }
 }
 
 StageManager::~StageManager()

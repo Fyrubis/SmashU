@@ -35,13 +35,16 @@ private:
     UIText *m_playerText;
     UIText *m_optionText;
     // TODO : texte pour la potion
-
+    UIText* m_itemsText;
     UITextList *m_player1List;
     UITextList *m_player2List;
+    UITextList *m_AIList;
     UITextList *m_timeList;
     UITextList *m_liveList;
     UITextList *m_gamemodeList;
     // TODO : Liste de fréquence pour la potion
+    UITextList *m_potionsList;
+    UITextList *m_bombsList;
 
     UIDefaultButton *m_startButton;
     UIDefaultButton *m_backButton;
