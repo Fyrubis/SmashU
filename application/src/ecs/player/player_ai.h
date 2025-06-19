@@ -28,7 +28,7 @@ struct PlayerAI
 
     float jumpThresold;
     float desiredTargetDistance;
-    float targetDistance;
+    b2Vec2 targetDistance;
     float delayDefend;
 };
 
