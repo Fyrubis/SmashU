@@ -44,13 +44,18 @@ UIStageHUD::UIStageHUD(Scene* scene)
         }
         break;
     case StageConfig::Mode::LIMITED_TIME:
-        hLayout = new UIGridLayout(m_scene, 1, playerCount);
+        hLayout = new UIGridLayout(m_scene, 1, playerCount * 2);
         hLayout->SetParent(this);
         hLayout->SetAnchor(Anchor::SOUTH);
         hLayout->SetPadding(10.f);
-        hLayout->SetColumnSpacing(50.f);
+        hLayout->SetColumnSpacing(12.5f);
         hLayout->SetRowSize(30.f);
-        hLayout->SetColumnSize(80.f);
+        for (int i = 0; i < playerCount; i++) {
+            hLayout->SetColumnSize(i * 2, 70.f);  // Percent
+            hLayout->SetColumnSize(i * 2 + 1, 110.f); // Score
+            if (i * 2 - 1 > 0)
+                hLayout->SetColumnSpacing(i * 2 - 1, 60.f);
+        }
         break;
     }
 
@@ -69,6 +74,7 @@ UIStageHUD::UIStageHUD(Scene* scene)
     default:
     case StageConfig::Mode::LIMITED_LIVES:
 
+        // Setup des images-borders
         for (int j = 0; j < playerCount * 2; j++) {
             fillImage = new UIImage(m_scene, spriteGroup, 1);
             fillImage->SetBorders(6, 6, 6, 6, 4.f);
@@ -78,6 +84,7 @@ UIStageHUD::UIStageHUD(Scene* scene)
             hLayout->AddObject(fillImage, 0, j);
         }
 
+        // Par joueur
         for (int i = 0; i < playerCount; i++)
         {
             // Compteur des dégats
@@ -88,7 +95,7 @@ UIStageHUD::UIStageHUD(Scene* scene)
             hLayout->AddObject(text, 0, i * 2);
             m_damageTexts.push_back(text);
 
-
+            // Vie restante
             font = assets->GetFont(FONT_DAMAGE);
             text = new UIText(scene, "Vie : 0", font, Colors::White);
             text->SetAnchor(Anchor::CENTER);
@@ -100,34 +107,37 @@ UIStageHUD::UIStageHUD(Scene* scene)
 
     case StageConfig::Mode::LIMITED_TIME:
 
-        for (int i = 0; i < playerCount; i++)
-        {
+        // Setup des images-borders
+        for (int j = 0; j < playerCount * 2; j++) {
             fillImage = new UIImage(m_scene, spriteGroup, 1);
             fillImage->SetBorders(6, 6, 6, 6, 4.f);
             fillImage->SetOpacity(0.5f);
             fillImage->SetLayer(LAYER_UI_BACKGROUND);
             fillImage->SetParent(this);
-            hLayout->AddObject(fillImage, 0, i);
+            hLayout->AddObject(fillImage, 0, j);
+        }
 
+        // Par joueur
+        for (int i = 0; i < playerCount; i++)
+        {
             // Compteur des dégats
             font = assets->GetFont(FONT_DAMAGE);
             UIText* text = new UIText(scene, "0%", font, Colors::White);
             text->SetAnchor(Anchor::CENTER);
 
-            hLayout->AddObject(text, 0, i);
-
+            hLayout->AddObject(text, 0, i * 2);
             m_damageTexts.push_back(text);
-        }
-        break;
-    }
 
-    // Compteur du temps restant
-    switch (g_gameCommon.stageConfig.mode)
-    {
-    default:
-    case StageConfig::Mode::LIMITED_LIVES:
-        break;
-    case StageConfig::Mode::LIMITED_TIME:
+            // Score
+            font = assets->GetFont(FONT_DAMAGE);
+            text = new UIText(scene, "Score : 0", font, Colors::White);
+            text->SetAnchor(Anchor::CENTER);
+
+            hLayout->AddObject(text, 0, i * 2 + 1);
+            m_lifeText.push_back(text);
+        }
+
+        // Temps restant
         font = assets->GetFont(FONT_TIME);
         m_timeText = new UIText(scene, "0:00", font, Colors::White);
         m_timeText->SetParent(this);
@@ -149,6 +159,7 @@ void UIStageHUD::Update()
     default:
     case StageConfig::Mode::LIMITED_LIVES:
         
+        // Vie restante
         for (int i = 0; i < playerCount; i++) {
             const PlayerStats* player = g_gameCommon.GetPlayerStats(i);
             const int life = static_cast<int>(g_gameCommon.stageConfig.lifeCount - player->fallCount);
@@ -160,7 +171,17 @@ void UIStageHUD::Update()
 
 
     case StageConfig::Mode::LIMITED_TIME:
+
+        // Score
+        for (int i = 0; i < playerCount; i++) {
+            const PlayerStats* player = g_gameCommon.GetPlayerStats(playerCount - i -1);
+            const int score = static_cast<int>(player->fallCount);
+
+            char buffer[128] = { 0 };
+            m_lifeText[i]->SetString("Score : " + std::to_string(score));
+        }
         
+        // Temps restant
         int minutes = (int)stageManager->GetRemainingTime() / 60;
         int seconds = (int)stageManager->GetRemainingTime() % 60;
         char buffer[128] = { 0 };
