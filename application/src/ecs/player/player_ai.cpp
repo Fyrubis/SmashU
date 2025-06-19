@@ -123,8 +123,6 @@ void PlayerAISystem::ComeBack(
             input.jumpPressed = true;
         }
     }
-
-    if (velocity.y > 0.0f) input.jumpDown = true;
 }
 
 void PlayerAISystem::JoinTarget(
@@ -146,9 +144,9 @@ void PlayerAISystem::JoinTarget(
         input.direction = -1.f;
     }
 
-    if (position.y < target.position.y)
+    if (position.y + 1.f < target.position.y)
     {
-        input.jumpPressed = +1.f;
+        input.jumpPressed = true;
     }
 }
 

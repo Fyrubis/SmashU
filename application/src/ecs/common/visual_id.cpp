@@ -33,7 +33,10 @@ void VisualIDCommand::Create(
 
     // Bonus : Vous pouvez changer le groupe en fonction de la config pour pouvoir afficher CPU
 
-    spriteGroup = spriteSheet->GetGroup("P" + std::to_string(affiliation.playerID + 1));
+    if (config->isCPU)
+        spriteGroup = spriteSheet->GetGroup("CPU");
+    else
+        spriteGroup = spriteSheet->GetGroup("P" + std::to_string(affiliation.playerID + 1));
     AssertNew(spriteGroup);
 
     // Bonus : Vous pouvez changer le rectangle source pour avoir la couleur de l'équipe
